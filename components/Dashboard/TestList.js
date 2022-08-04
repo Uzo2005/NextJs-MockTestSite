@@ -6,7 +6,7 @@ const TestList = ({testIdentifier, testid}) => {
                 <li>
                     <input type="hidden" value={testid} name="examId" />
                 
-                    <button className="w3-button w3-block w3-hover-light-green btnClick" type="submit">
+                    <button className=" type="submit">
 
                         <span className="w3-padding ">{testIdentifier}</span>
 

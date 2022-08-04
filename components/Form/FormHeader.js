@@ -1,16 +1,15 @@
 import OfficialLogo from '../Logo/OfficialLogo'
-import styles from './Form.module.css'
 
 const FormHeader = ({title,subtitle}) => {
     return (
         <>
-                <div className="w3-display-topmiddle w3-margin-top">
+                <div className="ml-[110px]">
                     <OfficialLogo/>
                 </div>
-                <div className={styles.formTitle}>
+                <div className="text-center text-red-700 font-bold">
                     <span>{title}</span>
                 </div>
-                <div className={styles.formSubtitle}>
+                <div className=" text-blue-700 font-semibold">
                     <span>{subtitle}</span>
                 </div>
         </>

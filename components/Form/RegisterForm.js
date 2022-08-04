@@ -1,12 +1,12 @@
 import FormHeader from './FormHeader'
 import FormBody from './RegisterFormBody'
-import styles from './Form.module.css'
+
 
 
 const RegisterForm = () => {
     return (
-        <form  className={styles.body} action='/login'>
-            <div className={`${styles.registerForm} w3-margin`}>
+        <form  className="p-[20px] w-[350px] bg-gray-300 py-[40px] rounded-3xl my-[100px] shadow-xl">
+            <div className="">
                 <FormHeader
                 title='Register'
                 subtitle='Input Your Name And The Email EdUSA Identifies You With'
