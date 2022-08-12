@@ -1,26 +1,54 @@
 import NavBar from "./NavBar"
 import TestList from "./TestList"
+import { readClient } from "../../lib/sanityClient"
+import { withIronSessionSsr } from "iron-session/next"
+import { sessionOptions } from "../../lib/sessionOptions"
 
-const Dashboard = () => {
+
+
+// export const getServerSideProps = withIronSessionSsr(
+//     async function getServerSideProps({ req }) {
+//       const userName = req.session.user.name;
+//       return {
+//         props: {
+//            user: userName
+//         },
+//       };
+//     },
+//     sessionOptions
+//   );
+            
+
+
+const Dashboard = ({user, tests}) => {
     return(
         <main>
-            <NavBar/>
-            <ul className="w3-ul w3-margin  w3-leftbar w3-center w3-border w3-hoverable w3-padding-large w3-large w3-border-blue  w3-round-large">
-                    {/* for every test, display test list */}
-                    <TestList/>
-            </ul>
+            <NavBar
+                studentName={user}
+            />
+            <ul className="bg-sky-400 p-3 border-2 border-blue-400">
 
-    
-            <form className="w3-display-topright" action="/logout?_method=DELETE" method="POST">
-                <button  className="w3-button w3-red w3-round w3-margin w3-hover-opacity" >Logout</button>
-            </form>
-                        
-        </main>
+                    {tests.map((test,index)=>{
+                         return (
+                            <TestList
+                                key={index}
+                                testIdentifier = {test.testIdentifier}
+                                testid = {test._id}
+                            />
+                         )
+                    })}
                     
+            </ul>
+        </main>
+
     )
 }
+    
+
+
 export default Dashboard
+                        
+                    
                 
-            
-            
-       
+  
+

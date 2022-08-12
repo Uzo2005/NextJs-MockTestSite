@@ -1,4 +1,4 @@
-import ExamNavButton from './ExamNavButton'
+import NextSectionButton from './NextSectionButton'
 import Timer from './Timer'
 
 
@@ -7,9 +7,15 @@ const ExamHeader = () => {
         <div className="bg-blue-300 h-10 w-screen rounded-sm px-4 py-1 border-blue-800 border-2
         flex justify-between ">
             
-                    {/* <button className="skip">Skip to the Writing section</button> */}
-                    <ExamNavButton/>
-                    <Timer/>
+                    
+                    <NextSectionButton
+                        nextSectionLink="/writing"
+                        nextSectionText="Writing"
+                    />
+
+                    <Timer
+                        timeInMinutes={65}
+                    />
             
         </div>
             

@@ -1,4 +1,7 @@
-const SubmitButton = ({styling}) => {
+
+
+const SubmitButton = () => {
+
     return (
         <div>
             <input className="font-bold text-center

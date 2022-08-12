@@ -1,9 +1,49 @@
 import UserDashboard from '../components/Dashboard/Dashboard'
 
-const Dashboard = () => {
+import Head from 'next/head'
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from '../lib/sessionOptions';
+import { readClient } from '../lib/sanityClient';
+
+  
+
+
+
+const Dashboard = ({user, availableTests}) => {
     return(
-        <UserDashboard/>
+      <>
+        <Head>
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            <title>{user.toString()}'s Dashboard</title>
+            <meta name="description" content="SAT MockTest Site" />
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <UserDashboard
+        user={user}
+        tests={availableTests}
+        />
+      </>
     )
 }
 
 export default Dashboard
+
+
+export const getServerSideProps = withIronSessionSsr(
+
+async function getServerSideProps({ req }) {
+
+    const query = "*[_type=='satExams']{testIdentifier, _id}"
+    
+    const allAvailableTests = await readClient.fetch(query)
+    
+    const userName = req.session.user.name
+    return {
+      props: {
+        user: userName,
+        availableTests: allAvailableTests
+      },
+    }
+},
+sessionOptions
+)

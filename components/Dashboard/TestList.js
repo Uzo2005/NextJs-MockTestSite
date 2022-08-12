@@ -1,21 +1,21 @@
 const TestList = ({testIdentifier, testid}) => {
     return(
         <>
-            <form action= "/generalInstructions" method= "post">
 
-                <li>
-                    <input type="hidden" value={testid} name="examId" />
-                
-                    <button className=" type="submit">
+            <li>
+                <form className="bg-gray-300  flex items-center justify-center m-5 rounded-sm" action= "/api/initExam" method= "POST">
+                        <input type="hidden" value={testid} name="examId" />
+                    
+                        <button className="m-2 p-3 bg-blue-700 hover:bg-blue-500 rounded-sm" type="submit">
 
-                        <span className="w3-padding ">{testIdentifier}</span>
+                            <span className="font-semibold">{testIdentifier}</span>
 
-                    </button>
+                        </button>
+                </form>
             
+            </li>
 
-                </li>
 
-            </form>
         </>
     )
 }

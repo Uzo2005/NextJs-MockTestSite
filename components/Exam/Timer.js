@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 
-const Timer = () => {
+const Timer = ({timeInMinutes}) => {
+    
 
-    const[timer, setTimer] = useState(65*60)
+    const[timer, setTimer] = useState(timeInMinutes*60)
     setTimeout(() => setTimer(timer-1), 1000)
 
     

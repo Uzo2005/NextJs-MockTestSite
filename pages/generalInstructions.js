@@ -1,4 +1,4 @@
-import Instructions from "../components/Instructions/CompleteInstructions"
+import GeneralInstructions from "../components/Instructions/GeneralInstructions"
 import Head from 'next/head'
 
 
@@ -12,7 +12,7 @@ const generalInstructions = () => {
         </Head>
         <body className="bg-gradient-to-r from-sky-400 to-blue-400">
 
-        <Instructions/>
+        <GeneralInstructions/>
         </body>
         </>
     )
