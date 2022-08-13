@@ -1,8 +1,5 @@
 const LeisureBreak = () => {
-    return (
-        <>
-        </>
-    )
-}
+  return <></>;
+};
 
 export default LeisureBreak;

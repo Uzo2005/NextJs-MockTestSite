@@ -1,14 +1,11 @@
-import { withSessionRoute } from '../../lib/withSessions'
+import { withSessionRoute } from "../../lib/withSessions";
 
-export default withSessionRoute(
-  async function initExam(req, res, session) {
-    if(req.method=='POST'){
-
-        req.session.examInfo = {
-           id: req.body.examId
-        };
-        await req.session.save();
-        res.redirect('/generalInstructions');
-    }
+export default withSessionRoute(async function initExam(req, res, session) {
+  if (req.method == "POST") {
+    req.session.examInfo = {
+      id: req.body.examId,
+    };
+    await req.session.save();
+    res.redirect("/generalInstructions");
   }
-);
+});
