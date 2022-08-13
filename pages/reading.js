@@ -1,10 +1,9 @@
 import FullExam from '../components/Exam/FullExam'
 import Head from 'next/head'
 
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from '../lib/sessionOptions';
-import { readClient } from '../lib/sanityClient';
-import { builder } from '../lib/sanityClient';
+import { withSessionSsr } from '../lib/withSessions';
+import { readClient, builder } from '../lib/sanityClient';
+
 
 
 
@@ -28,7 +27,7 @@ const reading = ({passage1Data, passage2Data,passage3Data,passage4Data,passage5D
 export default reading;
 
 
-export const getServerSideProps = withIronSessionSsr(
+export const getServerSideProps = withSessionSsr(
 
     async function getServerSideProps({ req }) {
         const examId= req.session.examInfo.id
@@ -46,10 +45,10 @@ export const getServerSideProps = withIronSessionSsr(
     
        function urlFor(source) {
            return builder.image(source)
-                        .auto('format')
-                        .fit('max')
-                        .width(720)
-                        .toString()
+                        // .auto('format')
+                        // .fit('max')
+                        // .width(720)
+                        // .toString()
         }
 
         const Passage = (id) => {
@@ -57,7 +56,7 @@ export const getServerSideProps = withIronSessionSsr(
 
             for (let i=0; i<id.whatWillBeRead.length;i++){
                 const imageRef = id.whatWillBeRead[i].asset._ref
-                const imageUrl = urlFor(imageRef)
+                const imageUrl = urlFor(imageRef).url()
                 imageLinks.push(imageUrl)
             }   
 
@@ -99,6 +98,5 @@ export const getServerSideProps = withIronSessionSsr(
             // passage5Data: Passage(passage5)
           },
         }
-    },
-    sessionOptions
-    )
+    }
+)

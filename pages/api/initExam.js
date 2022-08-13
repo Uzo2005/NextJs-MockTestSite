@@ -1,7 +1,6 @@
-import { withIronSessionApiRoute } from "iron-session/next";
-import {sessionOptions} from '../../lib/sessionOptions'
+import { withSessionRoute } from '../../lib/withSessions'
 
-export default withIronSessionApiRoute(
+export default withSessionRoute(
   async function initExam(req, res, session) {
     if(req.method=='POST'){
 
@@ -11,6 +10,5 @@ export default withIronSessionApiRoute(
         await req.session.save();
         res.redirect('/generalInstructions');
     }
-  },
-  sessionOptions
+  }
 );

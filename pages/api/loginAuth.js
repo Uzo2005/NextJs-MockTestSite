@@ -1,10 +1,9 @@
 import { readClient } from "../../lib/sanityClient"
 import bcrypt from 'bcrypt'
 
-import {withIronSessionApiRoute} from "iron-session/next";
-import {sessionOptions} from '../../lib/sessionOptions'
+import { withSessionRoute } from '../../lib/withSessions'
 
-export default withIronSessionApiRoute(
+export default withSessionRoute(
     async function loginAuth(req, res) {
         if(req.method == 'POST') {
             const user = await req.body
@@ -37,10 +36,7 @@ export default withIronSessionApiRoute(
             }
                 
         }
-    },
-    sessionOptions
-    
-    
+    }
 )
             
             

@@ -1,5 +1,7 @@
-import Image from "next/image"
-import { useState } from "react"
+// import Image from "next/image"
+// import { useState } from "react"
+
+import {Formik} from 'formik'
 
 
 
@@ -12,23 +14,18 @@ const ExamBody = ({imageLink, questionsAndOptions}) => {
         overflow-y-scroll overflow-x-scroll scroll-smooth 
         scrollbar-thin scrollbar-thumb-slate-500 scrollbar-track-blue-200 
         touch-manipulation relative">
-            <section className="p-4 h-[5000px] ">
-            {imageLink.map((imageLinky,index)=>{
+            <section className="p-4">
+            {imageLink.map((imageLinky,index) => {
                          return (
-                            <div key={index}>
-                                <Image
+                            <div key={index} className="relative">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
                                     key={index}
                                     src={imageLinky}
-                                    // width="720px"
-                                    // height="300px"
-                                    // layout="fill" 
-                                    // objectFit="scale-down"
-                                    // object-position = "left bottom"
-                                    unoptimized  = {true}
-                                    // priority={true}
                                     alt= 'Reading Passage'
                                 />
                             </div>
+                                   
                             
                          )
                     })}
@@ -38,19 +35,31 @@ const ExamBody = ({imageLink, questionsAndOptions}) => {
         scroll-smooth scrollbar-thin scrollbar-thumb-slate-500 scrollbar-track-blue-200 
         touch-manipulation">
             <section  className="p-4 ">
-            {questionsAndOptions.map((questionsAndOptions,index)=>{
+            {questionsAndOptions.map((questionsAndOptions,index) => {
                          return (
-                            <div key={index}>
-                                <span>{index+1}</span><span>{questionsAndOptions.question}</span><br />
-                                <label htmlFor="A">{questionsAndOptions.OptionA}</label>
-                                <input type="radio" id="A" value="A" name={questionsAndOptions.question} /> <br />
-                                <label htmlFor="B">{questionsAndOptions.OptionB}</label>
-                                <input type="radio" id="B" value="B" name={questionsAndOptions.question} /> <br />
-                                <label htmlFor="C">{questionsAndOptions.OptionC}</label>
-                                <input type="radio" id="C" value="C" name={questionsAndOptions.question} /> <br />
-                                <label htmlFor="D">{questionsAndOptions.OptionD}</label>
-                                <input type="radio" id="D" value="D" name={questionsAndOptions.question} /> <br />
+                            <div  key={index} className="m-2 p-2 bg-white rounded">
+                                <span className="font-semibold">{index+1}. {questionsAndOptions.question}</span> <br/>
+
+                                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2 mt-4">
+                                    <input id="A" type="radio" value="A" name={questionsAndOptions.question} className="w-4 h-4 bg-gray-100 border-gray-300"/>
+                                    <label htmlFor="A" className="py-3 ml-2 w-full text-sm font-medium text-gray-900"> {questionsAndOptions.OptionA} </label>
+                                </div>
+                                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2">
+                                    <input id="B" type="radio" value="B" name={questionsAndOptions.question} className="w-4 h-4  bg-gray-100 border-gray-300"/>
+                                    <label htmlFor="B" className="py-3 ml-2 w-full text-sm font-medium text-gray-900"> {questionsAndOptions.OptionB} </label>
+                                </div>
+                                <div className="flex items-center pl-3 pr-4  border border-blue-500 rounded mb-2">
+                                    <input id="C" type="radio" value="A" name={questionsAndOptions.question} className="w-4 h-4  bg-gray-100 border-gray-300"/>
+                                    <label htmlFor="C" className="py-3 ml-2 w-full text-sm font-medium text-gray-900 "> {questionsAndOptions.OptionC} </label>
+                                </div>
+                                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2">
+                                    <input id="D" type="radio" value="D" name={questionsAndOptions.question} className="w-4 h-4 bg-gray-100 border-gray-300"/>
+                                    <label htmlFor="D" className="py-3 ml-2 w-full text-sm font-medium text-gray-900 "> {questionsAndOptions.OptionD} </label>
+                                </div>
                             </div>
+                                
+                            
+
                         )
                     })}
                                 

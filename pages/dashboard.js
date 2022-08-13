@@ -1,8 +1,7 @@
 import UserDashboard from '../components/Dashboard/Dashboard'
 
 import Head from 'next/head'
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from '../lib/sessionOptions';
+import { withSessionSsr } from '../lib/withSessions';
 import { readClient } from '../lib/sanityClient';
 
   
@@ -29,7 +28,7 @@ const Dashboard = ({user, availableTests}) => {
 export default Dashboard
 
 
-export const getServerSideProps = withIronSessionSsr(
+export const getServerSideProps = withSessionSsr(
 
 async function getServerSideProps({ req }) {
 
@@ -44,6 +43,5 @@ async function getServerSideProps({ req }) {
         availableTests: allAvailableTests
       },
     }
-},
-sessionOptions
+}
 )
