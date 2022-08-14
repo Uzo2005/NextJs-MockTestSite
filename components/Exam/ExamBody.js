@@ -1,8 +1,9 @@
 
 
-import { Formik } from "formik";
+
 
 const ExamBody = ({ imageLink, questionsAndOptions }) => {
+ 
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
       <div
