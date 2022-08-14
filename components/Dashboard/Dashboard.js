@@ -1,8 +1,6 @@
 import NavBar from "./NavBar";
 import TestList from "./TestList";
-import { readClient } from "../../lib/sanityClient";
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "../../lib/sessionOptions";
+
 
 // export const getServerSideProps = withIronSessionSsr(
 //     async function getServerSideProps({ req }) {
