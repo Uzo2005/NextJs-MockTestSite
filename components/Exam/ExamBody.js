@@ -1,5 +1,3 @@
-import {Formik} from 'formik'
-
 
 
 const ExamBody = ({ passage }) => {
