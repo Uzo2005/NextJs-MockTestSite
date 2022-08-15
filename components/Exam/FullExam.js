@@ -18,7 +18,7 @@ const FullExam = ({ passages}) => {
     return (
       <body className="bg-blue-500">
         <ExamHeader />
-        <ExamBody passage={passages[passage]} />
+        <ExamBody passageData={passages[passage]} route={parseInt(passage)+1} />
         <ExamFooter
           prevPassage={parseInt(passage) - 1}
           nextPassage={parseInt(passage) + 1}
@@ -26,7 +26,7 @@ const FullExam = ({ passages}) => {
           nextPassageId={parseInt(passage) + 2}
         />
       </body>
-    )
+    );
   }
   return <ErrorPage statusCode={404} />;
 };

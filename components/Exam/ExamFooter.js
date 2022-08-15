@@ -22,6 +22,7 @@ const ExamFooter = ({ prevPassage, nextPassage, prevPassageId, nextPassageId }) 
           linkTo={nextPassage}
           direction="Move"
           nextSetOfQuestions={nextPassageId}
+          // submitOrNot='submit'
         />
       )}
     </div>

@@ -1,4 +1,5 @@
 import {useField, Field} from 'formik'
+import {useRouter} from 'next/router'
 
 const MyRadioInput = ({children, labelFor, ...props}) => {
   const [field] = useField(props)
@@ -6,6 +7,8 @@ const MyRadioInput = ({children, labelFor, ...props}) => {
     <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2 mt-4">
       <Field
         {...field}
+        {...props}
+        id={labelFor}
         type="radio"
         className="w-4 h-4 bg-gray-100 border-gray-300"
       /> 
@@ -21,23 +24,40 @@ const MyRadioInput = ({children, labelFor, ...props}) => {
 
   );
 }
-const MultiChoiceQuestion = ({ questionNumber, questionText, optionA, optionB, optionC, optionD }) => {
+const MultiChoiceQuestion = ({ passageRoute, questionNumber, questionText, optionA, optionB, optionC, optionD }) => {
+  
   return (
     <div className="m-2 p-2 bg-white rounded">
       <span className="font-semibold">
         {questionNumber}. {questionText}
       </span>{" "}
       <br />
-      <MyRadioInput id="A" value="A" name={questionText} labelFor="A">
+      <MyRadioInput
+        value="A"
+        name={`passage${passageRoute}Question${questionNumber}`}
+        labelFor={`${questionNumber}A`}
+      >
         {optionA}
       </MyRadioInput>
-      <MyRadioInput id="B" value="B" name={questionText} labelFor="B">
+      <MyRadioInput
+        value="B"
+        name={`passage${passageRoute}Question${questionNumber}`}
+        labelFor={`${questionNumber}B`}
+      >
         {optionB}
       </MyRadioInput>
-      <MyRadioInput id="C" value="C" name={questionText} labelFor="C">
+      <MyRadioInput
+        value="C"
+        name={`passage${passageRoute}Question${questionNumber}`}
+        labelFor={`${questionNumber}C`}
+      >
         {optionC}
       </MyRadioInput>
-      <MyRadioInput id="D" value="D" name={questionText} labelFor="D">
+      <MyRadioInput
+        value="D"
+        name={`passage${passageRoute}Question${questionNumber}`}
+        labelFor={`${questionNumber}D`}
+      >
         {optionD}
       </MyRadioInput>
     </div>

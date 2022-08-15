@@ -1,9 +1,10 @@
-import {Formik} from "formik";
+import { Formik } from "formik";
 import MultiChoiceQuestion from "./MultiChoiceQuestion";
 
+const ExamBody = ({ passageData, route }) => {
 
 
-const ExamBody = ({ passage }) => {
+
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
       <div
@@ -14,7 +15,7 @@ const ExamBody = ({ passage }) => {
         touch-manipulation relative"
       >
         <section className="p-4">
-          {passage.imageLinks.map((imageLink, index) => {
+          {passageData.imageLinks.map((imageLink, index) => {
             return (
               <div key={index} className="relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,29 +32,39 @@ const ExamBody = ({ passage }) => {
       >
         <section className="p-4 ">
           <Formik
-            initialValues={passage.QandA.map((questionsAndOptions) => {
-              return {
-                [questionsAndOptions.question]: "",
-              };
-              
-            })}
+            initialValues={
+              {}
+            }
             onSubmit={(data) => {
-              console.log(data);
+              const answersArray = []
+              answersArray.push(data)
+              console.log('formValues:', data);
+              console.log('answersArr:',answersArray)
             }}
           >
-            {passage.QandA.map((questionsAndOptions, index) => {
-              return (
-                <MultiChoiceQuestion
-                  key={index}
-                  questionNumber={index + 1}
-                  questionText={questionsAndOptions.question}
-                  optionA={questionsAndOptions.optionA}
-                  optionB={questionsAndOptions.optionB}
-                  optionC={questionsAndOptions.optionC}
-                  optionD={questionsAndOptions.optionD}
-                />
-              );
-            })}
+            {({ handleSubmit, values }) => (
+              <form onSubmit={handleSubmit}>
+                {passageData.QandA.map((questionsAndOptions, index) => {
+                  return (
+                    <MultiChoiceQuestion
+                      key={index}
+                      passageRoute = {route}
+                      questionNumber={index+1}
+                      questionText={questionsAndOptions.question}
+                      optionA={questionsAndOptions.OptionA}
+                      optionB={questionsAndOptions.OptionB}
+                      optionC={questionsAndOptions.OptionC}
+                      optionD={questionsAndOptions.OptionD}
+
+                    />
+                  );
+                })}
+                <pre>
+                  {JSON.stringify(values, null, 2)}
+                </pre>
+                <button type="submit">Submit</button>
+              </form>
+            )}
           </Formik>
         </section>
       </div>
