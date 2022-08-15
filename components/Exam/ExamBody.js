@@ -1,7 +1,13 @@
+import {Formik} from "formik";
 
+<<<<<<< Updated upstream
 
 const ExamBody = ({ passage }) => {
  
+=======
+import MultiChoiceQuestion from "./MultiChoiceQuestion";
+const ExamBody = ({ imageLink, questionsAndOptions }) => {
+>>>>>>> Stashed changes
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
       <div
@@ -28,6 +34,7 @@ const ExamBody = ({ passage }) => {
         touch-manipulation"
       >
         <section className="p-4 ">
+<<<<<<< Updated upstream
           {passage.QandA.map((questionsAndOptions, index) => {
             return (
               <div key={index} className="m-2 p-2 bg-white rounded">
@@ -102,6 +109,33 @@ const ExamBody = ({ passage }) => {
               </div>
             );
           })}
+=======
+          <Formik
+            initialValues={
+              {
+                answers: []
+              }
+          }
+            onSubmit={(data) => {
+            console.log(data)
+          }}
+          >
+            
+            {questionsAndOptions.map((questionsAndOptions, index) => {
+              return (
+                <MultiChoiceQuestion
+                  key={index}
+                  questionNumber={index + 1}
+                  questionText={questionsAndOptions.question}
+                  optionA={questionsAndOptions.options.optionA}
+                  optionB={questionsAndOptions.options.optionB}
+                  optionC={questionsAndOptions.options.optionC}
+                  optionD={questionsAndOptions.options.optionD}
+                />
+              );
+            })}
+          </Formik>
+>>>>>>> Stashed changes
         </section>
       </div>
     </div>
