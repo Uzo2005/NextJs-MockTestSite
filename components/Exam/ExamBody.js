@@ -1,13 +1,9 @@
 import {Formik} from "formik";
+import MultiChoiceQuestion from "./MultiChoiceQuestion";
 
-<<<<<<< Updated upstream
+
 
 const ExamBody = ({ passage }) => {
- 
-=======
-import MultiChoiceQuestion from "./MultiChoiceQuestion";
-const ExamBody = ({ imageLink, questionsAndOptions }) => {
->>>>>>> Stashed changes
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
       <div
@@ -34,108 +30,31 @@ const ExamBody = ({ imageLink, questionsAndOptions }) => {
         touch-manipulation"
       >
         <section className="p-4 ">
-<<<<<<< Updated upstream
-          {passage.QandA.map((questionsAndOptions, index) => {
-            return (
-              <div key={index} className="m-2 p-2 bg-white rounded">
-                <span className="font-semibold">
-                  {index + 1}. {questionsAndOptions.question}
-                </span>{" "}
-                <br />
-                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2 mt-4">
-                  <input
-                    id="A"
-                    type="radio"
-                    value="A"
-                    name={questionsAndOptions.question}
-                    className="w-4 h-4 bg-gray-100 border-gray-300"
-                  />
-                  <label
-                    htmlFor="A"
-                    className="py-3 ml-2 w-full text-sm font-medium text-gray-900"
-                  >
-                    {" "}
-                    {questionsAndOptions.OptionA}{" "}
-                  </label>
-                </div>
-                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2">
-                  <input
-                    id="B"
-                    type="radio"
-                    value="B"
-                    name={questionsAndOptions.question}
-                    className="w-4 h-4  bg-gray-100 border-gray-300"
-                  />
-                  <label
-                    htmlFor="B"
-                    className="py-3 ml-2 w-full text-sm font-medium text-gray-900"
-                  >
-                    {" "}
-                    {questionsAndOptions.OptionB}{" "}
-                  </label>
-                </div>
-                <div className="flex items-center pl-3 pr-4  border border-blue-500 rounded mb-2">
-                  <input
-                    id="C"
-                    type="radio"
-                    value="A"
-                    name={questionsAndOptions.question}
-                    className="w-4 h-4  bg-gray-100 border-gray-300"
-                  />
-                  <label
-                    htmlFor="C"
-                    className="py-3 ml-2 w-full text-sm font-medium text-gray-900 "
-                  >
-                    {" "}
-                    {questionsAndOptions.OptionC}{" "}
-                  </label>
-                </div>
-                <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2">
-                  <input
-                    id="D"
-                    type="radio"
-                    value="D"
-                    name={questionsAndOptions.question}
-                    className="w-4 h-4 bg-gray-100 border-gray-300"
-                  />
-                  <label
-                    htmlFor="D"
-                    className="py-3 ml-2 w-full text-sm font-medium text-gray-900 "
-                  >
-                    {" "}
-                    {questionsAndOptions.OptionD}{" "}
-                  </label>
-                </div>
-              </div>
-            );
-          })}
-=======
           <Formik
-            initialValues={
-              {
-                answers: []
-              }
-          }
+            initialValues={passage.QandA.map((questionsAndOptions) => {
+              return {
+                [questionsAndOptions.question]: "",
+              };
+              
+            })}
             onSubmit={(data) => {
-            console.log(data)
-          }}
+              console.log(data);
+            }}
           >
-            
-            {questionsAndOptions.map((questionsAndOptions, index) => {
+            {passage.QandA.map((questionsAndOptions, index) => {
               return (
                 <MultiChoiceQuestion
                   key={index}
                   questionNumber={index + 1}
                   questionText={questionsAndOptions.question}
-                  optionA={questionsAndOptions.options.optionA}
-                  optionB={questionsAndOptions.options.optionB}
-                  optionC={questionsAndOptions.options.optionC}
-                  optionD={questionsAndOptions.options.optionD}
+                  optionA={questionsAndOptions.optionA}
+                  optionB={questionsAndOptions.optionB}
+                  optionC={questionsAndOptions.optionC}
+                  optionD={questionsAndOptions.optionD}
                 />
               );
             })}
           </Formik>
->>>>>>> Stashed changes
         </section>
       </div>
     </div>
