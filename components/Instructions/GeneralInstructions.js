@@ -2,7 +2,7 @@ import Template from "./Template";
 
 const GeneralInstructions = () => {
   return (
-    <Template prevLink="/dashboard" nextLink="/reading">
+    <Template prevLink="/dashboard" nextLink="/reading/0">
       <span className="font-bold p-1">1.</span>
       <span className="font-semibold text-blue-900">
         This test is divided into FOUR SECTIONS and will last a total of 3 hours

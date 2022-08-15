@@ -1,8 +1,8 @@
+import {Formik} from 'formik'
 
 
 
-
-const ExamBody = ({ imageLink, questionsAndOptions }) => {
+const ExamBody = ({ passage }) => {
  
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
@@ -14,11 +14,11 @@ const ExamBody = ({ imageLink, questionsAndOptions }) => {
         touch-manipulation relative"
       >
         <section className="p-4">
-          {imageLink.map((imageLinky, index) => {
+          {passage.imageLinks.map((imageLink, index) => {
             return (
               <div key={index} className="relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img key={index} src={imageLinky} alt="Reading Passage" />
+                <img key={index} src={imageLink} alt="Reading Passage" />
               </div>
             );
           })}
@@ -30,7 +30,7 @@ const ExamBody = ({ imageLink, questionsAndOptions }) => {
         touch-manipulation"
       >
         <section className="p-4 ">
-          {questionsAndOptions.map((questionsAndOptions, index) => {
+          {passage.QandA.map((questionsAndOptions, index) => {
             return (
               <div key={index} className="m-2 p-2 bg-white rounded">
                 <span className="font-semibold">

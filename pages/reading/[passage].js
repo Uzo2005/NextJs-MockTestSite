@@ -1,8 +1,12 @@
-import FullExam from "../components/Exam/FullExam";
+
+
+
+import FullExam from "../../components/Exam/FullExam";
 import Head from "next/head";
 
-import { withSessionSsr } from "../lib/withSessions";
-import { readClient, builder } from "../lib/sanityClient";
+import { withSessionSsr } from "../../lib/withSessions";
+import { readClient, builder } from "../../lib/sanityClient";
+
 
 const reading = ({
   passage1Data,
@@ -11,6 +15,7 @@ const reading = ({
   passage4Data,
   passage5Data,
 }) => {
+    
   return (
     <>
       <Head>
@@ -19,8 +24,15 @@ const reading = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <FullExam
-        imageData={passage1Data.imageLinks}
-        questionsData={passage1Data.QandA}
+        // imageData={passage1Data.imageLinks}
+        // questionsData={passage1Data.QandA}
+        passages={[
+          passage1Data,
+          passage2Data,
+          passage3Data,
+          passage4Data,
+          passage5Data,
+        ]}
       />
     </>
   );
@@ -32,7 +44,7 @@ export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
 
-    const query = `*[_type=='satExams' && _id=='${examId}']{mockTest[_type=="Reading"]}[0]`;
+    const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Reading"]}[0]`;
 
     const readingTestData = await readClient.fetch(query);
     const readingTest = readingTestData.mockTest[0];
@@ -43,11 +55,11 @@ export const getServerSideProps = withSessionSsr(
     const passage5 = await readingTest.passage5;
 
     function urlFor(source) {
-      return builder.image(source);
-      // .auto('format')
-      // .fit('max')
-      // .width(720)
-      // .toString()
+      return builder.image(source)
+        .auto('format')
+        .fit('max')
+        .width(720)
+        .toString()
     }
 
     const Passage = (id) => {
@@ -55,7 +67,7 @@ export const getServerSideProps = withSessionSsr(
 
       for (let i = 0; i < id.whatWillBeRead.length; i++) {
         const imageRef = id.whatWillBeRead[i].asset._ref;
-        const imageUrl = urlFor(imageRef).url();
+        const imageUrl = urlFor(imageRef);
         imageLinks.push(imageUrl);
       }
 
@@ -86,10 +98,10 @@ export const getServerSideProps = withSessionSsr(
     return {
       props: {
         passage1Data: Passage(passage1),
-        // passage2Data: Passage(passage2),
-        // passage3Data: Passage(passage3),
-        // passage4Data: Passage(passage4),
-        // passage5Data: Passage(passage5)
+        passage2Data: Passage(passage2),
+        passage3Data: Passage(passage3),
+        passage4Data: Passage(passage4),
+        passage5Data: Passage(passage5),
       },
     };
   }

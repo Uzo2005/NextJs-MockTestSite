@@ -3,7 +3,7 @@ const NextSectionButton = ({ nextSectionLink, nextSectionText }) => {
     <div className="w-fit h-7 p-1 bg-gray-800 hover:bg-gray-700  text-white font-semibold rounded-sm">
       <a href={nextSectionLink}>
         <button>
-          Skip To The <span>{nextSectionText}</span> Section
+          Submit And Move To The <span>{nextSectionText}</span> Section
         </button>
       </a>
     </div>
