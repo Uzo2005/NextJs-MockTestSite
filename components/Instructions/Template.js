@@ -15,7 +15,7 @@ const Template = ({ children, prevLink, nextLink }) => {
     modal.current.close();
   };
   return (
-    <main className="flex items-center justify-center -mt-5 ">
+    <main className="flex items-center justify-center -mt-5">
       <div className="w-[60%]">
         <section className="flex justify-center m-10">
           <OfficiaLogo />
