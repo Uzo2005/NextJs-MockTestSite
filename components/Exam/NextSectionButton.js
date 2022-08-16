@@ -1,8 +1,9 @@
-const NextSectionButton = ({ nextSectionLink, nextSectionText }) => {
+const NextSectionButton = ({nextSectionText, formId }) => {
   return (
     <div className="w-fit h-7 p-1 bg-gray-800 hover:bg-gray-700  text-white font-semibold rounded-sm">
-      <a href={nextSectionLink}>
-        <button>
+      <a>
+        {/* href={nextSectionLink} */}
+        <button type="submit" form={formId}>
           Submit And Move To The <span>{nextSectionText}</span> Section
         </button>
       </a>

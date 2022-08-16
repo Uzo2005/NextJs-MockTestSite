@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from "react";
+import {useRouter} from 'next/router'
 
 const Timer = ({ timeInMinutes }) => {
   useEffect(() => {
@@ -25,6 +26,12 @@ const Timer = ({ timeInMinutes }) => {
 
 
   setTimeout(() => setTimer(timer - 1), 1000);
+
+  const router = useRouter()
+
+  if (timer <= 0) {
+    router.push('/writingInstructions')
+  }
 
   return (
     <div className="inline-flex text-black font-semibold rounded-sm bg-green-400 w-fit p-1 h-15 cursor-pointer">

@@ -1,18 +1,15 @@
-import FullExam from "../../components/Exam/ReadingExam";
+import FullExam from "../../components/Exam/WritingExam";
 import Head from "next/head";
 
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
-
 
 const reading = ({
   passage1Data,
   passage2Data,
   passage3Data,
   passage4Data,
-  passage5Data,
 }) => {
-    
   return (
     <>
       <Head>
@@ -26,7 +23,6 @@ const reading = ({
           passage2Data,
           passage3Data,
           passage4Data,
-          passage5Data,
         ]}
       />
     </>
@@ -39,7 +35,7 @@ export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
 
-    const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Reading"]}[0]`;
+    const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Writing"]}[0]`;
 
     const readingTestData = await readClient.fetch(query);
     const readingTest = readingTestData.mockTest[0];
@@ -47,14 +43,14 @@ export const getServerSideProps = withSessionSsr(
     const passage2 = await readingTest.passage2;
     const passage3 = await readingTest.passage3;
     const passage4 = await readingTest.passage4;
-    const passage5 = await readingTest.passage5;
 
     function urlFor(source) {
-      return builder.image(source)
-        .auto('format')
-        .fit('max')
+      return builder
+        .image(source)
+        .auto("format")
+        .fit("max")
         .width(720)
-        .toString()
+        .toString();
     }
 
     const Passage = (id) => {
@@ -80,15 +76,12 @@ export const getServerSideProps = withSessionSsr(
 
         QandA.push(data);
       }
-      
 
       return {
         imageLinks,
-        QandA
+        QandA,
       };
     };
-
-   
 
     return {
       props: {
@@ -96,11 +89,7 @@ export const getServerSideProps = withSessionSsr(
         passage2Data: Passage(passage2),
         passage3Data: Passage(passage3),
         passage4Data: Passage(passage4),
-        passage5Data: Passage(passage5),
       },
     };
   }
 );
-
-
-

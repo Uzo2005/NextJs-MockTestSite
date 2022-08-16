@@ -1,7 +1,7 @@
 import Template from "./Template";
 const CalcAllowed = () => {
   return (
-    <Template prevLink="/dashboard" nextLink="/calcAllowed">
+    <Template prevLink="/dashboard" nextLink="/calcAllowed/0">
       <span className="font-bold p-1">1.</span>
       <span className="font-semibold text-blue-900">
         This is the Math(Calculator-allowed) section of this Mocktest.

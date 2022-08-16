@@ -1,8 +1,8 @@
 import ExamNavButton from "./ExamNavButton";
-import SubmitButton from '../Form/SubmitButton'
+// import SubmitButton from '../Form/SubmitButton'
 
 
-const ExamFooter = ({ prevPassage, nextPassage, prevPassageId, nextPassageId }) => {
+const ExamFooter = ({presentSection, prevPassage, nextPassage, prevPassageId, nextPassageId, endRange }) => {
 
 
   return (
@@ -12,13 +12,15 @@ const ExamFooter = ({ prevPassage, nextPassage, prevPassageId, nextPassageId }) 
     >
       {prevPassageId != 0 && (
         <ExamNavButton
+          presentSection={presentSection}
           linkTo={prevPassage}
           direction="Back"
           nextSetOfQuestions={prevPassageId}
         />
       )}
-      {nextPassageId != 6 && (
+      {nextPassageId != { endRange } && (
         <ExamNavButton
+          presentSection={presentSection}
           linkTo={nextPassage}
           direction="Move"
           nextSetOfQuestions={nextPassageId}

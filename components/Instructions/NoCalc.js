@@ -1,7 +1,7 @@
 import Template from "./Template";
 const NoCalc = () => {
   return (
-    <Template prevLink="/dashboard" nextLink="/noCalc">
+    <Template prevLink="/dashboard" nextLink="/noCalc/0">
       <span className="font-bold p-1">1.</span>
       <span className="font-semibold text-blue-900">
         This is the Math(No-Calculator) section of this Mocktest.

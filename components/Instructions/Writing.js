@@ -1,7 +1,7 @@
 import Template from "./Template";
 const Writing = () => {
   return (
-    <Template prevLink="/dashboard" nextLink="/writing">
+    <Template prevLink="/dashboard" nextLink="/writing/0">
       <span className="font-bold p-1">1.</span>
       <span className="font-semibold text-blue-900">
         This is the Writing And Language section of this Mocktest.
