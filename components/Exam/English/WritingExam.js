@@ -1,5 +1,5 @@
-import ExamHeader from "./ExamHeader";
-import ExamBody from "./ExamBody";
+import ExamHeader from "../ExamHeader";
+import ExamBody from "./EnglishExamBody";
 import ExamFooter from "./ExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
@@ -48,6 +48,7 @@ const FullExam = ({ passages }) => {
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
+              nextSectionInstructions='/noCalcInstructions'
                 nextSectionText="mathsNoCalc"
                 formId="writingForm"
                 timeInMinutes={35}

@@ -1,22 +1,16 @@
-import ExamHeader from "./ExamHeader";
-import ExamBody from "./ExamBody";
-import ExamFooter from "./ExamFooter";
+import ExamHeader from "../ExamHeader";
+import ExamBody from "./NoCalcExamBody";
+import ExamFooter from "./MathsExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
-import {useState} from 'react'
+import * as Yup from "yup";
 
-const FullExam = ({ passages}) => {
-  const router = useRouter()
-  const {passage} = router.query
+const FullExam = ({ categories }) => {
+  const router = useRouter();
+  const { category } = router.query;
   // const [completed, setCompleted] = useState(false)
-  if (
-    parseInt(passage) == 0 ||
-    parseInt(passage) == 1 ||
-    parseInt(passage) == 2 ||
-    parseInt(passage) == 3 ||
-    parseInt(passage) == 4 
-  ){
+  if (parseInt(category) == 0 || parseInt(category) == 1) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
@@ -38,35 +32,48 @@ const FullExam = ({ passages}) => {
       <main className="bg-blue-500">
         <Formik
           initialValues={{}}
+          validationSchema={Yup.object({
+            answer16: Yup.string().max(4, "Must be 4 characters or less"),
+            answer17: Yup.string().max(4, "Must be 4 characters or less"),
+            answer18: Yup.string().max(4, "Must be 4 characters or less"),
+            answer19: Yup.string().max(4, "Must be 4 characters or less"),
+            answer20: Yup.string().max(4, "Must be 4 characters or less"),
+          })}
           onSubmit={(data) => {
-            postData("/api/scoreReadingTest", data).then((data) => {
+            postData("/api/scoreNoCalcTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
+            
             localStorage.removeItem("startTime");
-            router.push("/writingInstructions");
+            router.push("/calcAllowedInstructions");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
-                nextSectionText="writing"
-                formId="readingForm"
-                timeInMinutes={65}
+                nextSectionInstructions="/calcAllowedInstructions"
+                nextSectionText="mathsCalcAllowed Section"
+                formId="noCalcForm"
+                timeInMinutes={25}
               />
               <ExamBody
-                passageData={passages[passage]}
-                route={parseInt(passage) + 1}
+                categoryData={categories[category]}
+                route={parseInt(category) + 1}
                 submitHandler={handleSubmit}
-                formId="readingForm"
+                formId="noCalcForm"
                 formValues={values}
               />
               <ExamFooter
-                presentSection="reading"
-                prevPassage={parseInt(passage) - 1}
-                nextPassage={parseInt(passage) + 1}
-                prevPassageId={parseInt(passage)}
-                nextPassageId={parseInt(passage) + 2}
-                endRange={6}
+                presentSection="noCalc"
+                prevPassage={parseInt(category) - 1}
+                nextPassage={parseInt(category) + 1}
+                prevPassageId={
+                  parseInt(category) == 1 ? "multiChoice Questions" : null
+                }
+                nextPassageId={
+                  parseInt(category) == 0 ? "gridIn Questions" : null
+                }
+                endRange={3}
               />
             </>
           )}

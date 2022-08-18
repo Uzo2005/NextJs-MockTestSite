@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import {useRouter} from 'next/router'
 
-const Timer = ({ timeInMinutes }) => {
+const Timer = ({ timeInMinutes, nextSection }) => {
   useEffect(() => {
     if (!localStorage.getItem("startTime")) {
       localStorage.setItem("startTime", JSON.stringify(Date.now()));
@@ -29,9 +29,13 @@ const Timer = ({ timeInMinutes }) => {
 
   const router = useRouter()
 
-  if (timer <= 0) {
-    router.push('/writingInstructions')
-  }
+  // if ( timer <= 0 ) {
+  //   router.push({
+  //   pathname: { nextSection }
+  //   // query 
+  // })
+  // }
+  
 
   return (
     <div className="inline-flex text-black font-semibold rounded-sm bg-green-400 w-fit p-1 h-15 cursor-pointer">
@@ -43,7 +47,7 @@ const Timer = ({ timeInMinutes }) => {
       <div className="ml-1">
         <span className="">
           <span id="countdown_seconds">
-            {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
+            { timer % 60 < 10 ? `0${timer % 60}` : timer % 60 }
           </span>{" "}
           Seconds
         </span>

@@ -1,4 +1,4 @@
-import FullExam from "../../components/Exam/ReadingExam";
+import FullExam from "../../components/Exam/English/ReadingExam";
 import Head from "next/head";
 
 import { withSessionSsr } from "../../lib/withSessions";

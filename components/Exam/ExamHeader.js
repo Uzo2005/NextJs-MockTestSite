@@ -2,7 +2,7 @@ import NextSectionButton from "./NextSectionButton";
 import Timer from "./Timer";
 import {useState, useEffect} from 'react'
 
-const ExamHeader = ({ nextSectionText, formId, timeInMinutes }) => {
+const ExamHeader = ({ nextSectionText, nextSectionInstructions, formId, timeInMinutes }) => {
   const [showTimer, setShowTimer] = useState(false);
 
   // Wait until after client-side hydration to show
@@ -20,7 +20,7 @@ const ExamHeader = ({ nextSectionText, formId, timeInMinutes }) => {
     >
       <NextSectionButton nextSectionText={nextSectionText} formId={formId} />
 
-      <Timer timeInMinutes={timeInMinutes} />
+      <Timer timeInMinutes={timeInMinutes} nextSection={nextSectionInstructions} />
     </div>
   );
 };

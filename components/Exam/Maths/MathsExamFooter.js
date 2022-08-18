@@ -1,16 +1,20 @@
-import ExamNavButton from "./ExamNavButton";
-// import SubmitButton from '../Form/SubmitButton'
+import ExamNavButton from "./MathsExamNavButton";
 
 
-const ExamFooter = ({presentSection, prevPassage, nextPassage, prevPassageId, nextPassageId, endRange }) => {
-
-
+const ExamFooter = ({
+  presentSection,
+  prevPassage,
+  nextPassage,
+  prevPassageId,
+  nextPassageId,
+  endRange,
+}) => {
   return (
     <div
       className="bg-blue-300 h-10 w-screen rounded-sm px-4 py-1 border-blue-800 border-2
         flex justify-between"
     >
-      {prevPassageId != 0 && (
+      {prevPassageId != 0 && prevPassageId != null && (
         <ExamNavButton
           presentSection={presentSection}
           linkTo={prevPassage}
@@ -18,17 +22,15 @@ const ExamFooter = ({presentSection, prevPassage, nextPassage, prevPassageId, ne
           nextSetOfQuestions={prevPassageId}
         />
       )}
-      {nextPassageId != { endRange } && (
+      {nextPassageId != parseInt(endRange) && nextPassageId != null && (
         <ExamNavButton
           presentSection={presentSection}
           linkTo={nextPassage}
           direction="Move"
           nextSetOfQuestions={nextPassageId}
-          // submitOrNot='submit'
         />
       )}
     </div>
   );
 };
-
-export default ExamFooter;
+export default ExamFooter

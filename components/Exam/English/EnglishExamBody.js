@@ -1,5 +1,5 @@
 
-import MultiChoiceQuestion from "./MultiChoiceQuestion";
+import MultiChoiceQuestion from "../MultiChoiceQuestion";
 
 const ExamBody = ({ passageData, route, submitHandler, formId, formValues }) => {
 
