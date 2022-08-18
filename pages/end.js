@@ -1,7 +1,7 @@
 const end = () => {
     return (
-        <div>
-            Enter
+        <div className="flex items-center justify-center">
+            The End
         </div>
     );
 }
