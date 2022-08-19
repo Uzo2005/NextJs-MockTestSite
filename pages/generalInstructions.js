@@ -1,7 +1,7 @@
 import GeneralInstructions from "../components/Instructions/GeneralInstructions";
 import Head from "next/head";
 
-const generalInstructions = () => {
+const generalinstructions = () => {
   return (
     <>
       <Head>
@@ -13,4 +13,4 @@ const generalInstructions = () => {
     </>
   );
 };
-export default generalInstructions;
+export default generalinstructions;
