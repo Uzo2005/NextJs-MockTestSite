@@ -7,6 +7,6 @@ export default withSessionRoute(async function initExam(req, res, session) {
     };
     await req.session.save();
     console.log('dashboard',req.session.examInfo)
-    res.redirect("/generalinstructions");
+    res.redirect("/general_instructions");
   }
 });
