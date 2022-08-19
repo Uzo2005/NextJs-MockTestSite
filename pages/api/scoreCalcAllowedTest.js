@@ -68,6 +68,13 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
         gridInScore38 +
         scoreForMultiChoice;
 
+      req.session.calcAllowedRawScore = {
+        calcAllowedRawScore: totalScore,
+      };
+      await req.session.save();
+
+      console.log(req.session.examInfo)
+
 
       res.send(
         JSON.stringify(

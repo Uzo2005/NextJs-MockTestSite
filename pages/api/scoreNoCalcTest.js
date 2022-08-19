@@ -52,14 +52,7 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
       const gridInScore18 = getgridInAnswers(gridInAnswer18, 18);
       const gridInScore19 = getgridInAnswers(gridInAnswer19, 19);
       const gridInScore20 = getgridInAnswers(gridInAnswer20, 20);
-      // console.log("scoreForMultiChoice:", scoreForMultiChoice);
-      // console.log("scoreForGridIn16:", gridInScore16);
-      // console.log("scoreForGridIn17:", gridInScore17);
-      // console.log("scoreForGridIn18:", gridInScore18);
-      // console.log("scoreForGridIn19:", gridInScore19);
-      // console.log("scoreForGridIn20:", gridInScore20);
-      // console.log("studentAnswers:", studentAnswers);
-      // console.log("correctAnswersMultiChoice:", correctAnswersForMultiChoice);
+      
       const totalScore =
         gridInScore16 +
         gridInScore17 +
@@ -67,6 +60,11 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
         gridInScore19 +
         gridInScore20 +
         scoreForMultiChoice;
+
+      req.session.noCalcRawScore = {
+        noCalcRawScore: totalScore,
+      };
+      await req.session.save();
 
 
       res.send(
