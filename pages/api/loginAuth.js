@@ -10,7 +10,7 @@ export default withSessionRoute(async function loginAuth(req, res) {
     const passwordInput = await user.studentPassword;
 
     try {
-      const query = `*[_type=='students' && emailOfStudent=='${userEmail}']{hashedPassword,nameOfStudent}`;
+      const query = `*[_type=='students' && emailOfStudent=='${userEmail}']{hashedPassword,nameOfStudent, _id}`;
       const getUser = await readClient.fetch(query);
 
       if (getUser.length == 0) {
@@ -18,6 +18,8 @@ export default withSessionRoute(async function loginAuth(req, res) {
       }
       const getUserPassword = getUser[0].hashedPassword;
       const getUserName = getUser[0].nameOfStudent;
+      const getUserId = getUser[0]._id;
+
       const isUser = await bcrypt.compare(passwordInput, getUserPassword);
       if (isUser == false) {
         return res.send("Invalid Password");
@@ -26,11 +28,13 @@ export default withSessionRoute(async function loginAuth(req, res) {
       req.session.user = {
         email: userEmail,
         name: getUserName,
+        id: getUserId
       };
       await req.session.save();
       res.redirect("/dashboard");
     } catch (err) {
       console.log(err);
+      res.end()
     }
   }
 });

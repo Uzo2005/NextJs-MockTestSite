@@ -73,7 +73,6 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
       };
       await req.session.save();
 
-      console.log(req.session.examInfo)
 
 
       res.send(

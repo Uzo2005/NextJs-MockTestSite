@@ -12,6 +12,7 @@ export default withSessionRoute(async function initExam(req, res) {
   }
   } catch (err) {
     console.log(err)
+    res.end();
   }
   
 });

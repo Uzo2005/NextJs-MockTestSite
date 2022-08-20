@@ -1,5 +1,4 @@
 import { writeClient } from "../../lib/sanityClient";
-import { useRouter } from "next/router";
 import bcrypt from "bcrypt";
 
 export default async function registerRouter(req, res) {

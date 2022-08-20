@@ -6,6 +6,7 @@ import Dialog from "../Dialog/Dialog";
 import { useRef } from "react";
 
 const Template = ({ children, prevLink, nextLink }) => {
+  
   const modal = useRef(null);
 
   const openModal = () => {
