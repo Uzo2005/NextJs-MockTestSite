@@ -5,11 +5,12 @@ import { withSessionSsr } from "../lib/withSessions";
 import { readClient } from "../lib/sanityClient";
 
 const Dashboard = ({ user, availableTests }) => {
+  const studentNameAsTitle = `${user}'s Dashboard`
   return (
     <>
       <Head>
         {/* eslint-disable-next-line react/no-unescaped-entities */}
-        <title>{user.toString()}'s Dashboard</title>
+        <title>{studentNameAsTitle}</title>
         <meta name="description" content="SAT MockTest Site" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
