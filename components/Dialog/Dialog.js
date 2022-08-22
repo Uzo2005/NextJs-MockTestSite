@@ -119,7 +119,7 @@ const Dialog = ({ prompt, no, yes, nextLink, pointer, closeModal }) => {
           {no}
         </button>
         <a href={nextLink}>
-          <button onClick={getToday} className="bg-blue-700 hover:bg-white text-white hover:text-blue-700 border-blue-800 border-2 h-[35px] px-2 w-30  font-bold text-center rounded-sm">
+          <button className="bg-blue-700 hover:bg-white text-white hover:text-blue-700 border-blue-800 border-2 h-[35px] px-2 w-30  font-bold text-center rounded-sm">
             {yes}
           </button>
         </a>

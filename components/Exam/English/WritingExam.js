@@ -4,13 +4,27 @@ import ExamFooter from "./ExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
-// import { useState } from "react";
+import { useState,useEffect } from "react";
 
-const FullExam = ({ passages }) => {
-  const router = useRouter();
-  const { passage } = router.query;
-  // const [completed, setCompleted] = useState(false)
-  if (
+const FullExam = ({ passages, doneWithExam }) => {
+   const router = useRouter();
+   const { passage } = router.query;
+
+  const [hydrated, setHydrated] = useState(false);
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null;
+  }
+ else if (doneWithExam) {
+   router.push("/noCalcInstructions");
+ }
+
+  else if (
     parseInt(passage) == 0 ||
     parseInt(passage) == 1 ||
     parseInt(passage) == 2 ||
@@ -33,11 +47,22 @@ const FullExam = ({ passages }) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
+    const logStatus = {
+      doneWithExam: true,
+      routeThisCameFrom: "writing",
+    };
+    const doneWithExamOrNot = postData(
+      "/api/doneWithExamOrNot",
+      logStatus
+    ).then((res) => {
+      console.log(res);
+    });
     return (
       <main className="bg-blue-500">
         <Formik
           initialValues={{}}
           onSubmit={(data) => {
+            doneWithExamOrNot()
             postData("/api/scoreWritingTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });

@@ -35,6 +35,7 @@ export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     
     const examId = req.session.examInfo.id;
+    const doneWithWritingExam = req.session.writing?.doneWithExam;
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Writing"]}[0]`;
 
@@ -90,6 +91,7 @@ export const getServerSideProps = withSessionSsr(
         passage2Data: Passage(passage2),
         passage3Data: Passage(passage3),
         passage4Data: Passage(passage4),
+        doneWithExam: doneWithWritingExam,
       },
     };
   }

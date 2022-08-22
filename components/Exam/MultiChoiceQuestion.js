@@ -4,24 +4,22 @@ import {useRouter} from 'next/router'
 const MyRadioInput = ({children, labelFor, ...props}) => {
   const [field] = useField(props)
   return (
-    <div className="flex items-center pl-3 pr-4 border border-blue-500 rounded mb-2 mt-4">
+    <div className="flex items-center border border-blue-500 rounded mb-2 mt-4">
       <Field
         {...field}
         {...props}
         id={labelFor}
         type="radio"
-        className="w-4 h-4 bg-gray-100 border-gray-300"
-      /> 
+        className="bg-gray-100 border-gray-300 peer hidden"
+      />
       <label
         htmlFor={labelFor}
-        className="py-3 ml-2 w-full text-sm font-medium text-gray-900"
+        className="py-3 w-full text-sm font-medium text-gray-900 peer-checked:bg-blue-500 peer-checked:text-white px-5"
       >
         {" "}
         {children}{" "}
       </label>
     </div>
-      
-
   );
 }
 const MultiChoiceQuestion = ({ passageRoute, questionNumber, questionText, optionA, optionB, optionC, optionD }) => {

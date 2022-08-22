@@ -7,7 +7,20 @@ export default withSessionRoute(async function initExam(req, res) {
       req.session.examInfo = {
         id: req.body.examId,
       };
+    //   req.session.reading = {
+    //     doneWithExam: false,
+    //   };
+    //  req.session.writing = {
+    //    doneWithExam: false,
+    //  };
+    //   req.session.noCalc = {
+    //     doneWithExam: false,
+    //   };
+    //   req.session.calcAllowed = {
+    //     doneWithExam: false,
+    //   };
       await req.session.save();
+      // console.log(req.session)
 
       // await writeClient
       //   .patch(req.session.user.id) // Document ID to patch

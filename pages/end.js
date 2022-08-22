@@ -21,6 +21,12 @@ const end = ({
       <h5>EnglishSectionScore: {englishSectionScore}</h5>
       <h5>MathsSectionScore: {mathsSectionScore}</h5>
       <h5>TotalSATScore: {finalSATScore}</h5>
+      <button>
+        {/* This will clear the session object of all the stuffs except user details, and submits user score to sanity
+        I think I will use the useEffect hook to do this to avoid edge cases where the user does not click this button
+        But then That will be done later */}
+        Return to Dashboard
+      </button>
     </div>
   );
 };

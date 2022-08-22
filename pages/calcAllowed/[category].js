@@ -4,7 +4,7 @@ import Head from "next/head";
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
 
-const noCalc = ({ multiChoiceData, gridInData }) => {
+const noCalc = ({ multiChoiceData, gridInData, doneWithExam }) => {
   return (
     <>
       <Head>
@@ -22,6 +22,7 @@ export default noCalc;
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
+    const doneWithCalcAllowedExam = req.session.calcAllowed?.doneWithExam;
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="mathsCalcAllowed"]}[0]`;
 
@@ -57,6 +58,7 @@ export const getServerSideProps = withSessionSsr(
       props: {
         multiChoiceData: mathsCategory(multiChoice),
         gridInData: mathsCategory(gridIn),
+        doneWithExam: doneWithCalcAllowedExam
       },
     };
   }

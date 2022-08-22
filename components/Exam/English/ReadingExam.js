@@ -4,19 +4,43 @@ import ExamFooter from "./ExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-const FullExam = ({ passages}) => {
-  const router = useRouter()
-  const {passage} = router.query
-  // const [completed, setCompleted] = useState(false)
+const FullExam = ({ passages, doneWithExam}) => {
+  const router = useRouter();
+  const { passage } = router.query;
+  // const refreshDataAndMoveToNextSection = async () => {
+  //   await router.replace(router.asPath);
+  //   await router.push("/writingInstructions");
+  // };
+  
+  const [hydrated, setHydrated] = useState(false);
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setHydrated(true);
+
+  }, []);
+
+  
+
+  if (!hydrated) {
+    return null;
+  }
+
+  
+  // console.log(doneWithExam)
+  if (doneWithExam) {
+    
+    router.push('/writingInstructions')
+  }
   if (
     parseInt(passage) == 0 ||
     parseInt(passage) == 1 ||
     parseInt(passage) == 2 ||
     parseInt(passage) == 3 ||
-    parseInt(passage) == 4 
-  ){
+    parseInt(passage) == 4
+  ) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
@@ -34,23 +58,37 @@ const FullExam = ({ passages}) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
+    const logStatus = {
+      doneWithExam: true,
+      routeThisCameFrom: 'reading'
+    }
+    const doneWithExamOrNot = () => {
+      postData("/api/doneWithExamOrNot", logStatus).then((res) => {
+        console.log(res);
+      })
+    }
+
+
     return (
       <main className="bg-blue-500">
         <Formik
           initialValues={{}}
           onSubmit={(data) => {
+            doneWithExamOrNot()
+            
             postData("/api/scoreReadingTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
+            
             localStorage.removeItem("startTime");
-            router.push("/writingInstructions");
+           router.push("/writingInstructions");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
                 nextSectionText="writing"
-                nextSectionInstructions='/writingInstructions'
+                nextSectionInstructions="/writingInstructions"
                 formId="readingForm"
                 timeInMinutes={65}
               />

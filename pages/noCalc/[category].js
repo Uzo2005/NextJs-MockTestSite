@@ -6,7 +6,8 @@ import { readClient, builder } from "../../lib/sanityClient";
 
 const noCalc = ({
   multiChoiceData,
-    gridInData,
+  gridInData,
+    doneWithExam
 }) => {
   return (
     <>
@@ -16,7 +17,7 @@ const noCalc = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <FullExam
-        categories={[multiChoiceData, gridInData]}
+        categories={[multiChoiceData, gridInData]} doneWithExam={doneWithExam}
       />
     </>
   );
@@ -27,6 +28,7 @@ export default noCalc;
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
+    const doneWithNoCalcExam = req.session.noCalc?.doneWithExam;
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="mathsNoCalc"]}[0]`;
 
@@ -62,6 +64,7 @@ export const getServerSideProps = withSessionSsr(
       props: {
         multiChoiceData: mathsCategory(multiChoice),
         gridInData: mathsCategory(gridIn),
+        doneWithExam: doneWithNoCalcExam
       },
     };
   }

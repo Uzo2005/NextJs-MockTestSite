@@ -5,11 +5,28 @@ import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useState,useEffect } from "react";
 
-const FullExam = ({ categories }) => {
+
+
+
+const FullExam = ({ categories, doneWithExam }) => {
   const router = useRouter();
   const { category } = router.query;
-  // const [completed, setCompleted] = useState(false)
+
+  const [hydrated, setHydrated] = useState(false);
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null;
+  } else if (doneWithExam) {
+    router.push("/calcAllowedInstructions");
+  }
+
   if (parseInt(category) == 0 || parseInt(category) == 1) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
@@ -28,6 +45,16 @@ const FullExam = ({ categories }) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
+    const logStatus = {
+      doneWithExam: true,
+      routeThisCameFrom: "noCalc",
+    };
+    const doneWithExamOrNot = postData(
+      "/api/doneWithExamOrNot",
+      logStatus
+    ).then((res) => {
+      console.log(res);
+    });
     return (
       <main className="bg-blue-500">
         <Formik
@@ -40,6 +67,7 @@ const FullExam = ({ categories }) => {
             answer20: Yup.string().max(4, "Must be 4 characters or less"),
           })}
           onSubmit={(data) => {
+            doneWithExamOrNot()
             postData("/api/scoreNoCalcTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });

@@ -54,7 +54,8 @@ export default withSessionRoute(async function scoreReadingTest(req, res) {
         req.session.readingRawScore = {
           readingRawScore: score,
         };
-        await req.session.save();
+      await req.session.save();
+
         
         res.send(
           JSON.stringify(

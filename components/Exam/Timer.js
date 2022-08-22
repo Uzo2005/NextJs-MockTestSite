@@ -29,12 +29,10 @@ const Timer = ({ timeInMinutes, nextSection }) => {
 
   const router = useRouter()
 
-  // if ( timer <= 0 ) {
-  //   router.push({
-  //   pathname: { nextSection }
-  //   // query 
-  // })
-  // }
+  if ( timer <= 0) {
+    localStorage.removeItem("startTime");
+    router.push(nextSection);
+  }
   
 
   return (

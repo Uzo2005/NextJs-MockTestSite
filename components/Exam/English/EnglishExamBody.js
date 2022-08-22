@@ -1,7 +1,13 @@
-
 import MultiChoiceQuestion from "../MultiChoiceQuestion";
 
-const ExamBody = ({ passageData, route, submitHandler, formId, formValues }) => {
+
+const ExamBody = ({
+  passageData,
+  route,
+  submitHandler,
+  formId,
+  formValues,
+}) => {
 
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">
@@ -29,25 +35,25 @@ const ExamBody = ({ passageData, route, submitHandler, formId, formValues }) => 
         touch-manipulation"
       >
         <section className="p-4 ">
-              <form onSubmit={submitHandler} id={formId}>
-                {passageData.QandA.map((questionsAndOptions, index) => {
-                  return (
-                    <MultiChoiceQuestion
-                      key={index}
-                      passageRoute={route}
-                      questionNumber={index + 1}
-                      questionText={questionsAndOptions.question}
-                      optionA={questionsAndOptions.OptionA}
-                      optionB={questionsAndOptions.OptionB}
-                      optionC={questionsAndOptions.OptionC}
-                      optionD={questionsAndOptions.OptionD}
-                    />
-                  );
-                })}
-                <pre>{JSON.stringify(formValues, null, 2)}</pre>
-                {/* <button type="submit">Submit</button> */}
-              </form>
-            {/* )} */}
+          <form onSubmit={submitHandler} id={formId}>
+            {passageData.QandA.map((questionsAndOptions, index) => {
+              return (
+                <MultiChoiceQuestion
+                  key={index}
+                  passageRoute={route}
+                  questionNumber={index + 1}
+                  questionText={questionsAndOptions.question}
+                  optionA={questionsAndOptions.OptionA}
+                  optionB={questionsAndOptions.OptionB}
+                  optionC={questionsAndOptions.OptionC}
+                  optionD={questionsAndOptions.OptionD}
+                />
+              );
+            })}
+            <pre>{JSON.stringify(formValues, null, 2)}</pre>
+            {/* <button type="submit">Submit</button> */}
+          </form>
+          {/* )} */}
           {/* </Formik> */}
         </section>
       </div>
