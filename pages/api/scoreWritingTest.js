@@ -43,7 +43,11 @@ export default withSessionRoute(async function scoreReadingTest(req, res) {
       req.session.writingRawScore = {
         writingRawScore: score,
       };
-        await req.session.save();
+      req.session.writing = {
+        doneWithExam: true,
+      };
+      await req.session.save();
+
       res.send(
         JSON.stringify(
           `Answers received :) your score is ${score} out of ${

@@ -4,36 +4,33 @@ import ExamFooter from "./ExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
-import {useState, useEffect} from 'react'
+import { useState, useEffect, useRef } from "react";
 
-const FullExam = ({ passages, doneWithExam}) => {
+const FullExam = ({ passages }) => {
   const router = useRouter();
   const { passage } = router.query;
-  // const refreshDataAndMoveToNextSection = async () => {
-  //   await router.replace(router.asPath);
-  //   await router.push("/writingInstructions");
-  // };
-  
+  const formRef = useRef();
+  const [formValues, setFormValues] = useState({})
+  useEffect(() => {
+    if (localStorage.getItem('readingFormState')){
+      setFormValues(JSON.parse(localStorage.getItem('readingFormState')))
+    }
+    
+  }, [])
+
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show
   useEffect(() => {
     setHydrated(true);
-
   }, []);
-
-  
 
   if (!hydrated) {
     return null;
   }
-
   
-  // console.log(doneWithExam)
-  if (doneWithExam) {
-    
-    router.push('/writingInstructions')
-  }
+
+ 
   if (
     parseInt(passage) == 0 ||
     parseInt(passage) == 1 ||
@@ -58,39 +55,27 @@ const FullExam = ({ passages, doneWithExam}) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
-    const logStatus = {
-      doneWithExam: true,
-      routeThisCameFrom: 'reading'
-    }
-    const doneWithExamOrNot = () => {
-      postData("/api/doneWithExamOrNot", logStatus).then((res) => {
-        console.log(res);
-      })
-    }
-
 
     return (
       <main className="bg-blue-500">
         <Formik
-          initialValues={{}}
+          initialValues={formValues}
+          innerRef={formRef}
           onSubmit={(data) => {
-            doneWithExamOrNot()
-            
-            postData("/api/scoreReadingTest", data).then((data) => {
+
+           postData("/api/scoreReadingTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
-            
-            localStorage.removeItem("startTime");
-           router.push("/writingInstructions");
+            router.push("/writingInstructions");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
                 nextSectionText="writing"
-                nextSectionInstructions="/writingInstructions"
                 formId="readingForm"
                 timeInMinutes={65}
+                submitHandler={handleSubmit}
               />
               <ExamBody
                 passageData={passages[passage]}
@@ -98,18 +83,19 @@ const FullExam = ({ passages, doneWithExam}) => {
                 submitHandler={handleSubmit}
                 formId="readingForm"
                 formValues={values}
-              />
-              <ExamFooter
-                presentSection="reading"
-                prevPassage={parseInt(passage) - 1}
-                nextPassage={parseInt(passage) + 1}
-                prevPassageId={parseInt(passage)}
-                nextPassageId={parseInt(passage) + 2}
-                endRange={6}
+                localStorageKey='readingFormState'
               />
             </>
           )}
         </Formik>
+        <ExamFooter
+          presentSection="reading"
+          prevPassage={parseInt(passage) - 1}
+          nextPassage={parseInt(passage) + 1}
+          prevPassageId={parseInt(passage)}
+          nextPassageId={parseInt(passage) + 2}
+          endRange={6}
+        />
       </main>
     );
   }

@@ -8,6 +8,7 @@ export default withSessionRoute(async function loginAuth(req, res) {
     const user = await req.body;
     const userEmail = await user.studentEmail;
     const passwordInput = await user.studentPassword;
+    // console.log("before:", req.session)
 
     try {
       const query = `*[_type=='students' && emailOfStudent=='${userEmail}']{hashedPassword,nameOfStudent, _id}`;
@@ -24,6 +25,7 @@ export default withSessionRoute(async function loginAuth(req, res) {
       if (isUser == false) {
         return res.send("Invalid Password");
       }
+      // console.log("after:", req.session);
 
       req.session.user = {
         email: userEmail,

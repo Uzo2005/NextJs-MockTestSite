@@ -1,8 +1,9 @@
 import NextSectionButton from "./NextSectionButton";
 import Timer from "./Timer";
-import {useState, useEffect} from 'react'
+// import {useState, useEffect} from 'react'
 
-const ExamHeader = ({ nextSectionText, nextSectionInstructions, formId, timeInMinutes }) => {
+const ExamHeader = ({ nextSectionText, formId, timeInMinutes, submitHandler}) => {
+  
   return (
     <div
       className="bg-blue-300 h-10 w-screen rounded-sm px-4 py-1 border-blue-800 border-2
@@ -10,7 +11,7 @@ const ExamHeader = ({ nextSectionText, nextSectionInstructions, formId, timeInMi
     >
       <NextSectionButton nextSectionText={nextSectionText} formId={formId} />
 
-      <Timer timeInMinutes={timeInMinutes} nextSection={nextSectionInstructions} />
+      <Timer timeInMinutes={timeInMinutes} timeUp = { submitHandler } />
     </div>
   );
 };

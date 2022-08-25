@@ -5,16 +5,20 @@ import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
 
 const noCalc = ({ multiChoiceData, gridInData, doneWithExam }) => {
-  return (
-    <>
-      <Head>
-        <title>EducationUSA Abuja SAT MockTest Site</title>
-        <meta name="description" content="SAT Practice For EdUSA members" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <FullExam categories={[multiChoiceData, gridInData]} />
-    </>
-  );
+  if (doneWithExam) {
+    return <h1>Hi, you have finished this test</h1>;
+  } else if (!doneWithExam) {
+    return (
+      <>
+        <Head>
+          <title>EducationUSA Abuja SAT MockTest Site</title>
+          <meta name="description" content="SAT Practice For EdUSA members" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <FullExam categories={[multiChoiceData, gridInData]} />
+      </>
+    );
+  }
 };
 
 export default noCalc;
@@ -22,7 +26,12 @@ export default noCalc;
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
-    const doneWithCalcAllowedExam = req.session.calcAllowed?.doneWithExam;
+    const doneWithCalcAllowedExam =
+      req.session.calcAllowed == undefined
+        ? false
+        : req.session.calcAllowed.doneWithExam;
+    console.log(doneWithCalcAllowedExam);
+    console.log(req.session);
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="mathsCalcAllowed"]}[0]`;
 
@@ -58,7 +67,7 @@ export const getServerSideProps = withSessionSsr(
       props: {
         multiChoiceData: mathsCategory(multiChoice),
         gridInData: mathsCategory(gridIn),
-        doneWithExam: doneWithCalcAllowedExam
+        doneWithExam: doneWithCalcAllowedExam,
       },
     };
   }

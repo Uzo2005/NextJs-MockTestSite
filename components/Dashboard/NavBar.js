@@ -4,7 +4,7 @@ const NavBar = ({ studentName }) => {
       <form
         className="w-fit h-fit p-2 bg-red-600 hover:bg-red-700 rounded-sm"
         action="/api/logout"
-        method="POST"
+        method="GET"
       >
         <button className="font-bold text-gray-50">Logout</button>
       </form>

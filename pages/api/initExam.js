@@ -20,7 +20,6 @@ export default withSessionRoute(async function initExam(req, res) {
     //     doneWithExam: false,
     //   };
       await req.session.save();
-      // console.log(req.session)
 
       // await writeClient
       //   .patch(req.session.user.id) // Document ID to patch

@@ -6,13 +6,20 @@ import ErrorPage from "next/error";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useState,useEffect } from "react";
-import doneWithExamOrNot from "../../../pages/api/doneWithExamOrNot";
 
 
 
-const FullExam = ({ categories, doneWithExam }) => {
+
+const FullExam = ({ categories }) => {
   const router = useRouter();
   const { category } = router.query;
+
+  const [formValues, setFormValues] = useState({});
+  useEffect(() => {
+    if (localStorage.getItem("calcAllowedFormState")) {
+      setFormValues(JSON.parse(localStorage.getItem("calcAllowedFormState")));
+    }
+  }, []);
 
   const [hydrated, setHydrated] = useState(false);
 
@@ -23,9 +30,7 @@ const FullExam = ({ categories, doneWithExam }) => {
 
   if (!hydrated) {
     return null;
-  } else if (doneWithExam) {
-    router.push("/end");
-  }
+  } 
 
   
   if (parseInt(category) == 0 || parseInt(category) == 1) {
@@ -46,20 +51,11 @@ const FullExam = ({ categories, doneWithExam }) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
-    const logStatus = {
-      doneWithExam: true,
-      routeThisCameFrom: "calcAllowed",
-    };
-    const doneWithExamOrNot = postData(
-      "/api/doneWithExamOrNot",
-      logStatus
-    ).then((res) => {
-      console.log(res);
-    });
+    
     return (
       <main className="bg-blue-500">
         <Formik
-          initialValues={{}}
+          initialValues={formValues}
           validationSchema={Yup.object({
             answer31: Yup.string().max(4, "Must be 4 characters or less"),
             answer32: Yup.string().max(4, "Must be 4 characters or less"),
@@ -71,22 +67,20 @@ const FullExam = ({ categories, doneWithExam }) => {
             answer38: Yup.string().max(4, "Must be 4 characters or less"),
           })}
           onSubmit={(data) => {
-            doneWithExamOrNot()
             postData("/api/scoreCalcAllowedTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
 
-            localStorage.removeItem("startTime");
             router.push("/end");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
-                nextSectionInstructions="/end"
                 nextSectionText="End Of This Practice Test"
                 formId="calcAllowedForm"
                 timeInMinutes={55}
+                submitHandler={handleSubmit}
               />
               <ExamBody
                 categoryData={categories[category]}
@@ -95,21 +89,19 @@ const FullExam = ({ categories, doneWithExam }) => {
                 formId="calcAllowedForm"
                 formValues={values}
               />
-              <ExamFooter
-                presentSection="calcAllowed"
-                prevPassage={parseInt(category) - 1}
-                nextPassage={parseInt(category) + 1}
-                prevPassageId={
-                  parseInt(category) == 1 ? "multiChoice Questions" : null
-                }
-                nextPassageId={
-                  parseInt(category) == 0 ? "gridIn Questions" : null
-                }
-                endRange={3}
-              />
             </>
           )}
         </Formik>
+        <ExamFooter
+          presentSection="calcAllowed"
+          prevPassage={parseInt(category) - 1}
+          nextPassage={parseInt(category) + 1}
+          prevPassageId={
+            parseInt(category) == 1 ? "multiChoice Questions" : null
+          }
+          nextPassageId={parseInt(category) == 0 ? "gridIn Questions" : null}
+          endRange={3}
+        />
       </main>
     );
   }

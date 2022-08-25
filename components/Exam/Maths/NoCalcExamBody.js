@@ -1,6 +1,7 @@
 import MultiChoiceQuestion from "../MultiChoiceQuestion";
 import { Form} from "formik";
 import MyGridInInput from "./GridInQuestion";
+import { useState, useEffect } from "react";
 
 
 const ExamBody = ({
@@ -10,6 +11,13 @@ const ExamBody = ({
   formId,
   formValues,
 }) => {
+  const [formState, setFormState] = useState({});
+  useEffect(() => {
+    setFormState(formValues);
+    localStorage.setItem("noCalcFormState", JSON.stringify(formState));
+    
+  }, [formValues, formState]);
+
   const multichoiceOptions = [];
 
   for (let index = 0; index < 15; index++) {

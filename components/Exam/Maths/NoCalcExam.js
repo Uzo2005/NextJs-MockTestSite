@@ -10,10 +10,15 @@ import { useState,useEffect } from "react";
 
 
 
-const FullExam = ({ categories, doneWithExam }) => {
+const FullExam = ({ categories}) => {
   const router = useRouter();
   const { category } = router.query;
-
+ const [formValues, setFormValues] = useState({});
+ useEffect(() => {
+   if (localStorage.getItem("noCalcFormState")) {
+     setFormValues(JSON.parse(localStorage.getItem("noCalcFormState")));
+   }
+ }, []);
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show
@@ -23,8 +28,6 @@ const FullExam = ({ categories, doneWithExam }) => {
 
   if (!hydrated) {
     return null;
-  } else if (doneWithExam) {
-    router.push("/calcAllowedInstructions");
   }
 
   if (parseInt(category) == 0 || parseInt(category) == 1) {
@@ -45,20 +48,11 @@ const FullExam = ({ categories, doneWithExam }) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
-    const logStatus = {
-      doneWithExam: true,
-      routeThisCameFrom: "noCalc",
-    };
-    const doneWithExamOrNot = postData(
-      "/api/doneWithExamOrNot",
-      logStatus
-    ).then((res) => {
-      console.log(res);
-    });
+    
     return (
       <main className="bg-blue-500">
         <Formik
-          initialValues={{}}
+          initialValues={formValues}
           validationSchema={Yup.object({
             answer16: Yup.string().max(4, "Must be 4 characters or less"),
             answer17: Yup.string().max(4, "Must be 4 characters or less"),
@@ -67,22 +61,20 @@ const FullExam = ({ categories, doneWithExam }) => {
             answer20: Yup.string().max(4, "Must be 4 characters or less"),
           })}
           onSubmit={(data) => {
-            doneWithExamOrNot()
             postData("/api/scoreNoCalcTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
-            
-            localStorage.removeItem("startTime");
+
             router.push("/calcAllowedInstructions");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
-                nextSectionInstructions="/calcAllowedInstructions"
                 nextSectionText="mathsCalcAllowed Section"
                 formId="noCalcForm"
                 timeInMinutes={25}
+                submitHandler={handleSubmit}
               />
               <ExamBody
                 categoryData={categories[category]}
@@ -91,21 +83,19 @@ const FullExam = ({ categories, doneWithExam }) => {
                 formId="noCalcForm"
                 formValues={values}
               />
-              <ExamFooter
-                presentSection="noCalc"
-                prevPassage={parseInt(category) - 1}
-                nextPassage={parseInt(category) + 1}
-                prevPassageId={
-                  parseInt(category) == 1 ? "multiChoice Questions" : null
-                }
-                nextPassageId={
-                  parseInt(category) == 0 ? "gridIn Questions" : null
-                }
-                endRange={3}
-              />
             </>
           )}
         </Formik>
+        <ExamFooter
+          presentSection="noCalc"
+          prevPassage={parseInt(category) - 1}
+          nextPassage={parseInt(category) + 1}
+          prevPassageId={
+            parseInt(category) == 1 ? "multiChoice Questions" : null
+          }
+          nextPassageId={parseInt(category) == 0 ? "gridIn Questions" : null}
+          endRange={3}
+        />
       </main>
     );
   }

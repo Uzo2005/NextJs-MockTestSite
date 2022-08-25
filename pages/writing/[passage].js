@@ -4,38 +4,40 @@ import Head from "next/head";
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
 
-const reading = ({
+const writing = ({
   passage1Data,
   passage2Data,
   passage3Data,
   passage4Data,
+  doneWithExam,
 }) => {
-  return (
-    <>
-      <Head>
-        <title>EducationUSA Abuja SAT MockTest Site</title>
-        <meta name="description" content="SAT Practice For EdUSA members" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <FullExam
-        passages={[
-          passage1Data,
-          passage2Data,
-          passage3Data,
-          passage4Data,
-        ]}
-      />
-    </>
-  );
+  if (doneWithExam) {
+    return <h1>Hi, you have finished this test</h1>;
+  } else if (!doneWithExam) {
+    return (
+      <>
+        <Head>
+          <title>EducationUSA Abuja SAT MockTest Site</title>
+          <meta name="description" content="SAT Practice For EdUSA members" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <FullExam
+          passages={[passage1Data, passage2Data, passage3Data, passage4Data]}
+        />
+      </>
+    );
+  }
 };
 
-export default reading;
+export default writing;
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
-    
     const examId = req.session.examInfo.id;
-    const doneWithWritingExam = req.session.writing?.doneWithExam;
+    const doneWithWritingExam =
+      req.session.writing == undefined
+        ? false
+        : req.session.writing.doneWithExam;
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Writing"]}[0]`;
 

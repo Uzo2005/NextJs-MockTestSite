@@ -71,10 +71,13 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
       req.session.calcAllowedRawScore = {
         calcAllowedRawScore: totalScore,
       };
+      req.session.calcAllowed = {
+        doneWithExam: true,
+      };
       await req.session.save();
 
 
-
+      // console.log(req.session);
       res.send(
         JSON.stringify(
           `Answers received :) your score is ${totalScore} out of ${

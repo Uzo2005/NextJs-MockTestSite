@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
-import doneWithExamOrNot from "../api/doneWithExamOrNot";
+
 
 const reading = ({
   passage1Data,
@@ -14,8 +14,13 @@ const reading = ({
   passage5Data,
   doneWithExam,
 }) => {
-  
-  return (
+  if(doneWithExam){
+    return <h5>Hi, you have finished this test</h5>
+  }
+  else if (!doneWithExam)
+  {
+    return (
+ 
     <>
       <Head>
         <title>EducationUSA Abuja SAT MockTest Site</title>
@@ -30,10 +35,11 @@ const reading = ({
           passage4Data,
           passage5Data,
         ]}
-        doneWithExam={doneWithExam}
       />
     </>
-  );
+  
+  )
+}
 };
 
 export default reading;
@@ -41,7 +47,12 @@ export default reading;
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const examId = req.session.examInfo.id;
-    const doneWithReadingExam = req.session.reading?.doneWithExam;
+    const doneWithReadingExam =
+      req.session.reading == undefined
+        ? false
+        : req.session.reading.doneWithExam;
+    // console.log(doneWithReadingExam)
+    
     
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Reading"]}[0]`;

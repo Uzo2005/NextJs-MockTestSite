@@ -1,4 +1,5 @@
 import MultiChoiceQuestion from "../MultiChoiceQuestion";
+import { useState, useEffect } from "react";
 
 
 const ExamBody = ({
@@ -7,7 +8,13 @@ const ExamBody = ({
   submitHandler,
   formId,
   formValues,
+  localStorageKey
 }) => {
+   const [formState, setFormState] = useState({});
+  useEffect(() => {
+    setFormState(formValues);
+    localStorage.setItem(localStorageKey, JSON.stringify(formState));
+  }, [formValues, formState, localStorageKey]);
 
   return (
     <div className="grid grid-cols-2 gap-[5px] m-[20px] cursor-pointer">

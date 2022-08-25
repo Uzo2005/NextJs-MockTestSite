@@ -64,6 +64,9 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
       req.session.noCalcRawScore = {
         noCalcRawScore: totalScore,
       };
+      req.session.noCalc = {
+        doneWithExam: true,
+      };
       await req.session.save();
 
 

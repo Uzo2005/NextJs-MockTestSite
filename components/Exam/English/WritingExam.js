@@ -4,11 +4,20 @@ import ExamFooter from "./ExamFooter";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
-import { useState,useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const FullExam = ({ passages, doneWithExam }) => {
-   const router = useRouter();
-   const { passage } = router.query;
+const FullExam = ({ passages }) => {
+  const router = useRouter();
+  const { passage } = router.query;
+  const formRef = useRef();
+
+  const [formValues, setFormValues] = useState({});
+  useEffect(() => {
+    if (localStorage.getItem("writingFormState")) {
+      setFormValues(JSON.parse(localStorage.getItem("writingFormState")));
+    }
+  }, []);
+
 
   const [hydrated, setHydrated] = useState(false);
 
@@ -20,11 +29,8 @@ const FullExam = ({ passages, doneWithExam }) => {
   if (!hydrated) {
     return null;
   }
- else if (doneWithExam) {
-   router.push("/noCalcInstructions");
- }
-
-  else if (
+  
+  if (
     parseInt(passage) == 0 ||
     parseInt(passage) == 1 ||
     parseInt(passage) == 2 ||
@@ -47,36 +53,26 @@ const FullExam = ({ passages, doneWithExam }) => {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }
-    const logStatus = {
-      doneWithExam: true,
-      routeThisCameFrom: "writing",
-    };
-    const doneWithExamOrNot = postData(
-      "/api/doneWithExamOrNot",
-      logStatus
-    ).then((res) => {
-      console.log(res);
-    });
+
     return (
       <main className="bg-blue-500">
         <Formik
-          initialValues={{}}
+          initialValues={formValues}
+          innerRef={formRef}
           onSubmit={(data) => {
-            doneWithExamOrNot()
             postData("/api/scoreWritingTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
-            localStorage.removeItem("startTime");
             router.push("/noCalcInstructions");
           }}
         >
           {({ handleSubmit, values }) => (
             <>
               <ExamHeader
-              nextSectionInstructions='/noCalcInstructions'
                 nextSectionText="mathsNoCalc"
                 formId="writingForm"
                 timeInMinutes={35}
+                submitHandler={handleSubmit}
               />
               <ExamBody
                 passageData={passages[passage]}
@@ -84,18 +80,19 @@ const FullExam = ({ passages, doneWithExam }) => {
                 submitHandler={handleSubmit}
                 formId="writingForm"
                 formValues={values}
-              />
-              <ExamFooter
-                presentSection="writing"
-                prevPassage={parseInt(passage) - 1}
-                nextPassage={parseInt(passage) + 1}
-                prevPassageId={parseInt(passage)}
-                nextPassageId={parseInt(passage) + 2}
-                endRange={5}
+                localStorageKey='writingFormState'
               />
             </>
           )}
         </Formik>
+        <ExamFooter
+          presentSection="writing"
+          prevPassage={parseInt(passage) - 1}
+          nextPassage={parseInt(passage) + 1}
+          prevPassageId={parseInt(passage)}
+          nextPassageId={parseInt(passage) + 2}
+          endRange={5}
+        />
       </main>
     );
   }

@@ -1,10 +1,12 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import {useRouter} from 'next/router'
 
-const Timer = ({ timeInMinutes, nextSection }) => {
+const Timer = ({ timeInMinutes, timeUp }) => {
   useEffect(() => {
     if (!localStorage.getItem("startTime")) {
       localStorage.setItem("startTime", JSON.stringify(Date.now()));
+    }
+    return () => {
+      localStorage.removeItem("startTime");
     }
   }, []);
 
@@ -27,12 +29,12 @@ const Timer = ({ timeInMinutes, nextSection }) => {
 
   setTimeout(() => setTimer(timer - 1), 1000);
 
-  const router = useRouter()
-
-  if ( timer <= 0) {
-    localStorage.removeItem("startTime");
-    router.push(nextSection);
-  }
+/**
+ * The next few lines is a bomb and can crash this whole site!!
+ */
+  // if (timer <= 64*60) {
+  //   timeUp()
+  // }
   
 
   return (
