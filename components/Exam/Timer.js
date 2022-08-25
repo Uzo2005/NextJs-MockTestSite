@@ -26,11 +26,12 @@ const Timer = ({ timeInMinutes, timeUp }) => {
   }, []);
 
   const timerCountingDown = () => {
-    if (timer <= 0.5) {
+    if (timer <= 1) {
       timeUp()
     }
     setTimer(timer - 1);
   };
+
   setTimeout(timerCountingDown, 1000);
 
 
