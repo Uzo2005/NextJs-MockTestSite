@@ -7,7 +7,7 @@ const Timer = ({ timeInMinutes, timeUp }) => {
     }
     return () => {
       localStorage.removeItem("startTime");
-    }
+    };
   }, []);
 
   const [timer, setTimer] = useState(timeInMinutes * 60);
@@ -15,27 +15,24 @@ const Timer = ({ timeInMinutes, timeUp }) => {
   useLayoutEffect(() => {
     const totalTimeInSeconds = timeInMinutes * 60;
     if (localStorage.getItem("startTime")) {
-     setTimer(
-      totalTimeInSeconds -
-        Math.floor(
-          (Date.now() - JSON.parse(localStorage.getItem("startTime"))) / 1000
-        )
-    );
+      setTimer(
+        totalTimeInSeconds -
+          Math.floor(
+            (Date.now() - JSON.parse(localStorage.getItem("startTime"))) / 1000
+          )
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-    
 
+  const timerCountingDown = () => {
+    if (timer <= 0.5) {
+      timeUp()
+    }
+    setTimer(timer - 1);
+  };
+  setTimeout(timerCountingDown, 1000);
 
-  setTimeout(() => setTimer(timer - 1), 1000);
-
-/**
- * The next few lines is a bomb and can crash this whole site!!
- */
-  // if (timer <= 64*60) {
-  //   timeUp()
-  // }
-  
 
   return (
     <div className="inline-flex text-black font-semibold rounded-sm bg-green-400 w-fit p-1 h-15 cursor-pointer">
@@ -47,7 +44,7 @@ const Timer = ({ timeInMinutes, timeUp }) => {
       <div className="ml-1">
         <span className="">
           <span id="countdown_seconds">
-            { timer % 60 < 10 ? `0${timer % 60}` : timer % 60 }
+            {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
           </span>{" "}
           Seconds
         </span>
