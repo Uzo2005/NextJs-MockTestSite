@@ -1,10 +1,8 @@
 import FullExam from "../../components/Exam/English/ReadingExam";
 import Head from "next/head";
-
-
+import Link from 'next/link'
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
-
 
 const reading = ({
   passage1Data,
@@ -14,32 +12,39 @@ const reading = ({
   passage5Data,
   doneWithExam,
 }) => {
-  if(doneWithExam){
-    return <h5>Hi, you have finished this test</h5>
-  }
-  else if (!doneWithExam)
-  {
+  if (doneWithExam) {
     return (
- 
-    <>
-      <Head>
-        <title>EducationUSA Abuja SAT MockTest Site</title>
-        <meta name="description" content="SAT Practice For EdUSA members" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <FullExam
-        passages={[
-          passage1Data,
-          passage2Data,
-          passage3Data,
-          passage4Data,
-          passage5Data,
-        ]}
-      />
-    </>
-  
-  )
-}
+      <>
+        <span className="text-red-500 font-bold flex items-center justify-center mt-[50vh]">
+          Sorry, you have submitted the Reading Section!
+        </span>
+        <Link href="/writingInstructions">
+          <button className=" bg-blue-700 hover:bg-blue-500 text-white font-semibold p-3 rounded-md ml-[60rem] mt-[200px]">
+            Move To The Writing Section
+          </button>
+        </Link>
+      </>
+    );
+  } else if (!doneWithExam) {
+    return (
+      <>
+        <Head>
+          <title>EducationUSA Abuja SAT MockTest Site</title>
+          <meta name="description" content="SAT Practice For EdUSA members" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <FullExam
+          passages={[
+            passage1Data,
+            passage2Data,
+            passage3Data,
+            passage4Data,
+            passage5Data,
+          ]}
+        />
+      </>
+    );
+  }
 };
 
 export default reading;
@@ -52,8 +57,6 @@ export const getServerSideProps = withSessionSsr(
         ? false
         : req.session.reading.doneWithExam;
     // console.log(doneWithReadingExam)
-    
-    
 
     const query = `*[_type=='satExams' && _id=='${examId}'] {mockTest[_type=="Reading"]}[0]`;
 

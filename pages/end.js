@@ -1,6 +1,7 @@
 import { withSessionSsr } from "../lib/withSessions";
+import { writeClient } from "../lib/sanityClient";
 import scoreTable from "../lib/rawScoreToTestScoreTable";
-import Link from 'next/link';
+import Link from "next/link";
 import Confetti from "../components/Confetti/ConfettiComponent";
 
 const end = ({
@@ -14,7 +15,7 @@ const end = ({
 }) => {
   return (
     <main className="grid">
-      <Confetti/>
+      <Confetti />
       <div className="m-auto mb-6 mt-12">
         <span className="text-blue-600 font-semibold block text-3xl">
           Congratulations On Completing This Mocktest!
@@ -139,42 +140,63 @@ const end = ({
 export default end;
 
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req,res }) {
-    
+  async function getServerSideProps({ req, res }) {
     const {
       readingRawScore,
       writingRawScore,
       noCalcRawScore,
       calcAllowedRawScore,
     } = req.session;
-
+    const userId = req.session.user.id;
+    const testId = req.session.examInfo.id;
     const mathsRawScore =
       noCalcRawScore.noCalcRawScore + calcAllowedRawScore.calcAllowedRawScore;
-      const testScores = {};
-      Object.keys(scoreTable).forEach((rawScore) => {
-        if (rawScore == readingRawScore.readingRawScore) {
-          const readingTestScore = scoreTable[rawScore].reading;
-          testScores.reading = readingTestScore;
-          // console.log("Reading Score is:", readingTestScore);
-        }
-        if (rawScore == writingRawScore.writingRawScore) {
-          const writingTestScore = scoreTable[rawScore].writing;
-          testScores.writing = writingTestScore;
-          // console.log("Writing Score is:", writingTestScore);
-        }
-        if (rawScore == mathsRawScore) {
-          const mathsTestScore = scoreTable[rawScore].maths;
-          testScores.maths = mathsTestScore;
-          // console.log("Maths Score is:", mathsTestScore);
-        }
-      });
+    const testScores = {};
+    Object.keys(scoreTable).forEach((rawScore) => {
+      if (rawScore == readingRawScore.readingRawScore) {
+        const readingTestScore = scoreTable[rawScore].reading;
+        testScores.reading = readingTestScore;
+        // console.log("Reading Score is:", readingTestScore);
+      }
+      if (rawScore == writingRawScore.writingRawScore) {
+        const writingTestScore = scoreTable[rawScore].writing;
+        testScores.writing = writingTestScore;
+        // console.log("Writing Score is:", writingTestScore);
+      }
+      if (rawScore == mathsRawScore) {
+        const mathsTestScore = scoreTable[rawScore].maths;
+        testScores.maths = mathsTestScore;
+        // console.log("Maths Score is:", mathsTestScore);
+      }
+    });
 
-      const englishTestScore = (testScores.writing + testScores.reading) * 10;
-      const totalScore = englishTestScore + testScores.maths;
-      // console.log("Test Score Object:", testScores);
-      // console.log("englishSatScore:", englishTestScore);
-      // console.log("my Sat Score is:", totalScore);
-    
+    const englishTestScore = (testScores.writing + testScores.reading) * 10;
+    const totalScore = englishTestScore + testScores.maths;
+    // console.log("Test Score Object:", testScores);
+    // console.log("englishSatScore:", englishTestScore);
+    // console.log("my Sat Score is:", totalScore);
+
+    // await writeClient
+    //   .patch(userId)
+    //   .append("practiceScoresOfThisStudent", [
+    //     {
+    //       scoreForThisTest: totalScore,
+    //       test: {
+    //         _type: "reference",
+    //         _ref: testId,
+    //       },
+    //     },
+    //   ])
+    //   .commit({
+    //     autoGenerateArrayKeys: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("Student score logged Successfully");
+    //     console.log(res.practiceScoresOfThisStudent);
+    //   })
+    //   .catch((err) => {
+    //     console.error("Failed: ", err.message);
+    //   });
 
     return {
       props: {

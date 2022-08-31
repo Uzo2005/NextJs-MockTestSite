@@ -1,12 +1,24 @@
 import FullExam from "../../components/Exam/Maths/NoCalcExam";
 import Head from "next/head";
+import Link from "next/link";
 
 import { withSessionSsr } from "../../lib/withSessions";
 import { readClient, builder } from "../../lib/sanityClient";
 
 const noCalc = ({ multiChoiceData, gridInData, doneWithExam }) => {
   if (doneWithExam) {
-    return <h1>Hi, you have finished this test</h1>;
+    return (
+      <>
+        <span className="text-red-500 font-bold flex items-center justify-center mt-[50vh]">
+          Sorry, you have submitted the Maths- No Calculator Section!
+        </span>
+        <Link href="/calcAllowedInstructions">
+          <button className=" bg-blue-700 hover:bg-blue-500 text-white font-semibold p-3 rounded-md ml-[60rem] mt-[200px]">
+            Move To The Maths-Calculator Section
+          </button>
+        </Link>
+      </>
+    );
   } else if (!doneWithExam) {
     return (
       <>
