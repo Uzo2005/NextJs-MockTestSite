@@ -1,15 +1,15 @@
-import { writeClient } from "../../lib/sanityClient";
+import { writeClient, readClient } from "../../lib/sanityClient";
 import bcrypt from "bcrypt";
 
 export default async function registerRouter(req, res) {
   if (req.method === "POST") {
     const newStudent = req.body;
-    if (!newStudent.studentName || !newStudent.studentEmail) {
-      res.send("Give us your name and email");
+   const query = `*[_type=='students' && emailOfStudent=='${newStudent.studentEmail}']`;
+    const checkIfUserExists = await readClient.fetch(query);
+    if (checkIfUserExists.length != 0) {
+      return res.send(JSON.stringify("bad"));
     }
-    if (newStudent.studentPassword1 != newStudent.studentPassword2) {
-      res.send("Passwords didnt match!");
-    }
+    
     try {
       const hashedPassword = await bcrypt.hash(newStudent.studentPassword1, 10);
       const newStudentDoc = {
@@ -19,15 +19,13 @@ export default async function registerRouter(req, res) {
         hashedPassword: hashedPassword,
       };
 
-      await writeClient.create(newStudentDoc).then((res) => {
-        console.log(
-          `New Student was added, document ID is ${res._id} and studentName is ${res.nameOfStudent}`
-        );
-      });
+      await writeClient.create(newStudentDoc)
+        
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      res.redirect("/login");
+      
+      res.send(JSON.stringify("good"))
     } catch (err) {
-      console.log(err);
+      res.status(500).send('Internal Server Error.');
     }
   }
 }
