@@ -63,7 +63,7 @@ const ExamBody = ({
           {route == 1 && (
             <Form onSubmit={submitHandler} id={formId}>
               {multichoiceOptions}
-              <pre>{JSON.stringify(formValues, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
             </Form>
           )}
 
@@ -75,7 +75,7 @@ const ExamBody = ({
               <MyGridInInput questionNumber="18" name="answer18" />
               <MyGridInInput questionNumber="19" name="answer19" />
               <MyGridInInput questionNumber="20" name="answer20" />
-              <pre>{JSON.stringify(formValues, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
             </Form>
           )}
         </section>

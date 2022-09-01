@@ -57,7 +57,7 @@ const ExamBody = ({
                 />
               );
             })}
-            <pre>{JSON.stringify(formValues, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
             {/* <button type="submit">Submit</button> */}
           </form>
           {/* )} */}
