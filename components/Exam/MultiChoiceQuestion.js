@@ -26,7 +26,7 @@ const MultiChoiceQuestion = ({ passageRoute, questionNumber, questionText, optio
   
   return (
     <div className="m-2 p-2 bg-white rounded">
-      <span className="font-semibold">
+      <span className="font-medium">
         {questionNumber}. {questionText}
       </span>{" "}
       <br />
