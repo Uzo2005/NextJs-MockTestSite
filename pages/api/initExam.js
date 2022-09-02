@@ -46,7 +46,7 @@ export default withSessionRoute(async function initExam(req, res) {
       //     console.error("Oh no, the update failed: ", err.message);
       //   });
 
-      res.redirect(307, "/firstInstructions");
+      res.redirect(302, "/firstInstructions");
       res.end();
     }
   } catch (err) {
