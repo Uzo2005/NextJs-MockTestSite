@@ -24,7 +24,7 @@ const writing = ({
           </button>
         </Link>
       </>
-    )
+    );
   } else if (!doneWithExam) {
     return (
       <>
@@ -82,9 +82,20 @@ export const getServerSideProps = withSessionSsr(
       const arrLen = id.questions.length;
 
       for (let i = 0; i < arrLen; i++) {
+        if (id.questions[i].newQuestionImage) {
+          var questionImageLink = urlFor(id.questions[i].newQuestionImage);
+        } else {
+          var questionImageLink = null;
+        }
+        if (id.questions[i].newQuestion) {
+          var questionText = id.questions[i].newQuestion;
+        } else {
+          var questionText = null;
+        }
+
         const data = {
-          questionImage: urlFor(id.questions[i].newQuestionImage),
-          question: id.questions[i].newQuestion,
+          questionImage: questionImageLink,
+          question: questionText,
           OptionA: id.questions[i].OptionA,
           OptionB: id.questions[i].OptionB,
           OptionC: id.questions[i].OptionC,
@@ -99,13 +110,28 @@ export const getServerSideProps = withSessionSsr(
         QandA,
       };
     };
-
+    const passage1Info = {
+      passageData: Passage(passage1),
+      startingPoint: 0,
+    };
+    const passage2Info = {
+      passageData: Passage(passage2),
+      startingPoint: Passage(passage1).QandA.length,
+    };
+    const passage3Info = {
+      passageData: Passage(passage3),
+      startingPoint: passage2Info.startingPoint + Passage(passage2).QandA.length,
+    };
+    const passage4Info = {
+      passageData: Passage(passage4),
+      startingPoint: passage3Info.startingPoint + Passage(passage3).QandA.length,
+    };
     return {
       props: {
-        passage1Data: Passage(passage1),
-        passage2Data: Passage(passage2),
-        passage3Data: Passage(passage3),
-        passage4Data: Passage(passage4),
+        passage1Data: passage1Info,
+        passage2Data: passage2Info,
+        passage3Data: passage3Info,
+        passage4Data: passage4Info,
         doneWithExam: doneWithWritingExam,
       },
     };

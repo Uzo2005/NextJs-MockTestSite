@@ -38,8 +38,8 @@ const MultiChoiceQuestion = ({
         <Image
           src={questionImage}
           alt={`Number ${questionNumber}'s image`}
-          height={500}
-          width={700}
+          height={400}
+          width={600}
         />
       )}
       <span className="font-medium">

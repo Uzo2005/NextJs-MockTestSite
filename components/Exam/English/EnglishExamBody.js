@@ -26,7 +26,7 @@ const ExamBody = ({
         touch-manipulation relative"
       >
         <section className="p-4">
-          {passageData.imageLinks.map((imageLink, index) => {
+          {passageData.passageData.imageLinks.map((imageLink, index) => {
             return (
               <div key={index} className="relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,13 +43,13 @@ const ExamBody = ({
       >
         <section className="p-4 ">
           <form onSubmit={submitHandler} id={formId}>
-            {passageData.QandA.map((questionsAndOptions, index) => {
+            {passageData.passageData.QandA.map((questionsAndOptions, index) => {
               return (
                 <MultiChoiceQuestion
                   key={index}
                   passageRoute={route}
                   questionImage={questionsAndOptions.questionImage}
-                  questionNumber={index + 1}
+                  questionNumber={passageData.startingPoint + index + 1}
                   questionText={questionsAndOptions.question}
                   optionA={questionsAndOptions.OptionA}
                   optionB={questionsAndOptions.OptionB}
