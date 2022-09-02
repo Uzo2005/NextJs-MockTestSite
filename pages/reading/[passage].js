@@ -91,6 +91,7 @@ export const getServerSideProps = withSessionSsr(
 
       for (let i = 0; i < arrLen; i++) {
         const data = {
+          questionImage: urlFor(id.questions[i].newQuestionImage),
           question: id.questions[i].newQuestion,
           OptionA: id.questions[i].OptionA,
           OptionB: id.questions[i].OptionB,

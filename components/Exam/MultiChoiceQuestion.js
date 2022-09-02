@@ -1,8 +1,8 @@
-import {useField, Field} from 'formik'
-import {useRouter} from 'next/router'
+import { useField, Field } from "formik";
+import Image from "next/image";
 
-const MyRadioInput = ({children, labelFor, ...props}) => {
-  const [field] = useField(props)
+const MyRadioInput = ({ children, labelFor, ...props }) => {
+  const [field] = useField(props);
   return (
     <div className="flex items-center border border-blue-500 rounded mb-2 mt-4">
       <Field
@@ -21,11 +21,27 @@ const MyRadioInput = ({children, labelFor, ...props}) => {
       </label>
     </div>
   );
-}
-const MultiChoiceQuestion = ({ passageRoute, questionNumber, questionText, optionA, optionB, optionC, optionD }) => {
-  
+};
+const MultiChoiceQuestion = ({
+  passageRoute,
+  questionNumber,
+  questionImage,
+  questionText,
+  optionA,
+  optionB,
+  optionC,
+  optionD,
+}) => {
   return (
     <div className="m-2 p-2 bg-white rounded">
+      {questionImage && (
+        <Image
+          src={questionImage}
+          alt={`Number ${questionNumber}'s image`}
+          height={500}
+          width={700}
+        />
+      )}
       <span className="font-medium">
         {questionNumber}. {questionText}
       </span>{" "}

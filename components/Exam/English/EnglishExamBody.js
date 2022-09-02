@@ -48,6 +48,7 @@ const ExamBody = ({
                 <MultiChoiceQuestion
                   key={index}
                   passageRoute={route}
+                  questionImage={questionsAndOptions.questionImage}
                   questionNumber={index + 1}
                   questionText={questionsAndOptions.question}
                   optionA={questionsAndOptions.OptionA}
