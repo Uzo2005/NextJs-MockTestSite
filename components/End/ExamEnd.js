@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Confetti from "../Confetti/ConfettiComponent";
-import { useEffect } from "react";
-import { writeClient } from "../../lib/sanityClient";
+import { useState, useEffect } from "react";
+
 
 const ExamEnd = ({
   readingScore,
