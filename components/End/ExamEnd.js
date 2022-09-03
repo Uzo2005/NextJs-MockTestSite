@@ -11,7 +11,8 @@ const ExamEnd = ({
   englishSectionScore,
   mathsSectionScore,
   finalSATScore,
-  
+  testId,
+  userId
 }) => {
   async function postData(url = "", data = {}) {
     // Default options are marked with *
@@ -32,14 +33,32 @@ const ExamEnd = ({
   }
 
   useEffect(() => {
-    postData("/api/scoreLogger", {
-      englishSectionScore,
-      mathsSectionScore,
-      finalSATScore,
-    }).then((res) => {
-      console.log("On the frontend:", res);
-    });
-  }, [englishSectionScore, mathsSectionScore, finalSATScore])
+    if (!localStorage.getItem("justFinishedExam")) {
+
+      localStorage.setItem("justFinishedExam", JSON.stringify('done'))
+
+      postData("/api/scoreLogger", {
+        englishSectionScore,
+        mathsSectionScore,
+        finalSATScore,
+        readingScore,
+        writingScore,
+        noCalcScore,
+        calcAllowedScore,
+        testId,
+        userId,
+      }).then((res) => {
+        console.log("On the frontend:", res);
+      });
+
+    }
+    return () => {
+      localStorage.removeItem("justFinishedExam");
+    };
+    
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="grid">
