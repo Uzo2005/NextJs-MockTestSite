@@ -16,6 +16,9 @@ const FullExam = ({ passages }) => {
     if (localStorage.getItem("writingFormState")) {
       setFormValues(JSON.parse(localStorage.getItem("writingFormState")));
     }
+    return () => {
+      localStorage.removeItem("writingFormState");
+    };
   }, []);
 
 

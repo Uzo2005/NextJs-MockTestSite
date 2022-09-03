@@ -11,13 +11,7 @@ const FullExam = ({ passages }) => {
   const { passage } = router.query;
   const formRef = useRef();
   const [formValues, setFormValues] = useState({})
-  useEffect(() => {
-    if (localStorage.getItem('readingFormState')){
-      setFormValues(JSON.parse(localStorage.getItem('readingFormState')))
-    }
-    
-  }, [])
-
+  
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show

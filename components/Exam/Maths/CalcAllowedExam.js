@@ -19,6 +19,9 @@ const FullExam = ({ categories }) => {
     if (localStorage.getItem("calcAllowedFormState")) {
       setFormValues(JSON.parse(localStorage.getItem("calcAllowedFormState")));
     }
+    return () => {
+      localStorage.removeItem("calcAllowedFormState");
+    };
   }, []);
 
   const [hydrated, setHydrated] = useState(false);
