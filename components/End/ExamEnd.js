@@ -58,7 +58,17 @@ const ExamEnd = ({
     
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  const [hydrated, setHydrated] = useState(false);
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setHydrated(true);
   }, []);
+
+  if (!hydrated) {
+    return null;
+  }
 
   return (
     <main className="grid">
