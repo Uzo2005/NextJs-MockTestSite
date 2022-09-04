@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 const ExamBody = ({
   categoryData,
+  questionsRef,
   route,
   submitHandler,
   formId,
@@ -62,7 +63,7 @@ const ExamBody = ({
         scroll-smooth scrollbar-thin scrollbar-thumb-slate-500 scrollbar-track-blue-200 
         touch-manipulation"
       >
-        <section className="p-4 ">
+        <section className="p-4 " ref={questionsRef}>
           {route == 1 && (
             <Form onSubmit={submitHandler} id={formId}>
               {multichoiceOptions}

@@ -9,9 +9,27 @@ import { useState, useEffect, useRef } from "react";
 const FullExam = ({ passages }) => {
   const router = useRouter();
   const { passage } = router.query;
+  const [test, setTest] = useState(parseInt(passage));
   const formRef = useRef();
-  const [formValues, setFormValues] = useState({})
+  const questionsRef = useRef();
   
+  const [formValues, setFormValues] = useState({});
+
+  useEffect(() => {
+    if (localStorage.getItem("readingFormState")) {
+      setFormValues(JSON.parse(localStorage.getItem("readingFormState")));
+    }
+    return () => {
+      localStorage.removeItem("readingFormState");
+    };
+  }, []);
+
+  useEffect(() => {
+    setTest(parseInt(passage));
+    questionsRef.current?.scrollIntoView({ behavior: "smooth" });
+    
+  }, [test, passage]);
+
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show
@@ -22,16 +40,8 @@ const FullExam = ({ passages }) => {
   if (!hydrated) {
     return null;
   }
-  
 
- 
-  if (
-    parseInt(passage) == 0 ||
-    parseInt(passage) == 1 ||
-    parseInt(passage) == 2 ||
-    parseInt(passage) == 3 ||
-    parseInt(passage) == 4
-  ) {
+  if (test == 0 || test == 1 || test == 2 || test == 3 || test == 4) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
@@ -56,8 +66,7 @@ const FullExam = ({ passages }) => {
           initialValues={formValues}
           innerRef={formRef}
           onSubmit={(data) => {
-
-           postData("/api/scoreReadingTest", data).then((data) => {
+            postData("/api/scoreReadingTest", data).then((data) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
             router.push("/writingInstructions");
@@ -72,22 +81,23 @@ const FullExam = ({ passages }) => {
                 submitHandler={handleSubmit}
               />
               <ExamBody
-                passageData={passages[passage]}
-                route={parseInt(passage) + 1}
+                passageData={passages[test]}
+                route={test + 1}
                 submitHandler={handleSubmit}
                 formId="readingForm"
                 formValues={values}
-                localStorageKey='readingFormState'
+                localStorageKey="readingFormState"
+                questionsRef={questionsRef}
               />
             </>
           )}
         </Formik>
         <ExamFooter
           presentSection="reading"
-          prevPassage={parseInt(passage) - 1}
-          nextPassage={parseInt(passage) + 1}
-          prevPassageId={parseInt(passage)}
-          nextPassageId={parseInt(passage) + 2}
+          prevPassage={test - 1}
+          nextPassage={test + 1}
+          prevPassageId={test}
+          nextPassageId={test + 2}
           endRange={6}
         />
       </main>

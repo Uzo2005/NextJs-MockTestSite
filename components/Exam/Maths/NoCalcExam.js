@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useRef } from "react";
 
 
 
@@ -13,7 +13,9 @@ import { useState,useEffect } from "react";
 const FullExam = ({ categories}) => {
   const router = useRouter();
   const { category } = router.query;
- const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState({});
+  const [test, setTest] = useState(parseInt(category));
+  const questionsRef = useRef()
  useEffect(() => {
    if (localStorage.getItem("noCalcFormState")) {
      setFormValues(JSON.parse(localStorage.getItem("noCalcFormState")));
@@ -22,6 +24,10 @@ const FullExam = ({ categories}) => {
      localStorage.removeItem("noCalcFormState");
    };
  }, []);
+  useEffect(() => {
+    setTest(parseInt(category));
+    questionsRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [test, category]);
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show
@@ -33,7 +39,7 @@ const FullExam = ({ categories}) => {
     return null;
   }
 
-  if (parseInt(category) == 0 || parseInt(category) == 1) {
+  if (test == 0 || test == 1) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
@@ -80,23 +86,24 @@ const FullExam = ({ categories}) => {
                 submitHandler={handleSubmit}
               />
               <ExamBody
-                categoryData={categories[category]}
-                route={parseInt(category) + 1}
+                categoryData={categories[test]}
+                route={test + 1}
                 submitHandler={handleSubmit}
                 formId="noCalcForm"
                 formValues={values}
+                questionsRef={questionsRef}
               />
             </>
           )}
         </Formik>
         <ExamFooter
           presentSection="noCalc"
-          prevPassage={parseInt(category) - 1}
-          nextPassage={parseInt(category) + 1}
+          prevPassage={test - 1}
+          nextPassage={test + 1}
           prevPassageId={
-            parseInt(category) == 1 ? "multiChoice Questions" : null
+            test == 1 ? "multiChoice Questions" : null
           }
-          nextPassageId={parseInt(category) == 0 ? "gridIn Questions" : null}
+          nextPassageId={test == 0 ? "gridIn Questions" : null}
           endRange={3}
         />
       </main>

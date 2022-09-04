@@ -9,7 +9,9 @@ import { useState, useEffect, useRef } from "react";
 const FullExam = ({ passages }) => {
   const router = useRouter();
   const { passage } = router.query;
+  const [test, setTest] = useState(parseInt(passage));
   const formRef = useRef();
+  const questionsRef = useRef();
 
   const [formValues, setFormValues] = useState({});
   useEffect(() => {
@@ -20,6 +22,10 @@ const FullExam = ({ passages }) => {
       localStorage.removeItem("writingFormState");
     };
   }, []);
+  useEffect(() => {
+    setTest(parseInt(passage));
+    questionsRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [test, passage]);
 
 
   const [hydrated, setHydrated] = useState(false);
@@ -34,10 +40,10 @@ const FullExam = ({ passages }) => {
   }
   
   if (
-    parseInt(passage) == 0 ||
-    parseInt(passage) == 1 ||
-    parseInt(passage) == 2 ||
-    parseInt(passage) == 3
+    test == 0 ||
+    test == 1 ||
+    test == 2 ||
+    test == 3
   ) {
     async function postData(url = "", data = {}) {
       // Default options are marked with *
@@ -78,22 +84,23 @@ const FullExam = ({ passages }) => {
                 submitHandler={handleSubmit}
               />
               <ExamBody
-                passageData={passages[passage]}
-                route={parseInt(passage) + 1}
+                passageData={passages[test]}
+                route={test + 1}
                 submitHandler={handleSubmit}
                 formId="writingForm"
                 formValues={values}
-                localStorageKey='writingFormState'
+                localStorageKey="writingFormState"
+                questionsRef={questionsRef}
               />
             </>
           )}
         </Formik>
         <ExamFooter
           presentSection="writing"
-          prevPassage={parseInt(passage) - 1}
-          nextPassage={parseInt(passage) + 1}
-          prevPassageId={parseInt(passage)}
-          nextPassageId={parseInt(passage) + 2}
+          prevPassage={test - 1}
+          nextPassage={test + 1}
+          prevPassageId={test}
+          nextPassageId={test + 2}
           endRange={5}
         />
       </main>

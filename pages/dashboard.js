@@ -23,6 +23,21 @@ export default Dashboard;
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
+
+
+    // req.session.reading = {
+    //   doneWithExam: false,
+    // };
+    // req.session.writing = {
+    //   doneWithExam: false,
+    // };
+    // req.session.noCalc = {
+    //   doneWithExam: false,
+    // };
+    // req.session.calcAllowed = {
+    //   doneWithExam: false,
+    // }
+
     const query = "*[_type=='satExams']{testIdentifier, _id}";
 
     const allAvailableTests = await readClient.fetch(query);

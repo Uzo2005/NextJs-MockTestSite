@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 
 const ExamBody = ({
+  questionsRef,
   passageData,
   route,
   submitHandler,
@@ -41,7 +42,7 @@ const ExamBody = ({
         scroll-smooth scrollbar-thin scrollbar-thumb-slate-500 scrollbar-track-blue-200 
         touch-manipulation"
       >
-        <section className="p-4 ">
+        <section className="p-4 " ref={questionsRef}>
           <form onSubmit={submitHandler} id={formId}>
             {passageData.passageData.QandA.map((questionsAndOptions, index) => {
               return (

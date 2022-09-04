@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Timer = ({ timeInMinutes, timeUp }) => {
   useEffect(() => {
@@ -12,24 +12,18 @@ const Timer = ({ timeInMinutes, timeUp }) => {
 
   const [timer, setTimer] = useState(timeInMinutes * 60);
 
-  useLayoutEffect(() => {
-    const totalTimeInSeconds = timeInMinutes * 60;
-    if (localStorage.getItem("startTime")) {
-      setTimer(
-        totalTimeInSeconds -
-          Math.floor(
-            (Date.now() - JSON.parse(localStorage.getItem("startTime"))) / 1000
-          )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const timerCountingDown = () => {
+    const totalTimeInSeconds = timeInMinutes * 60;
     if (timer <= 1) {
-      timeUp()
+      timeUp();
     }
-    setTimer(timer - 1);
+    setTimer(
+      totalTimeInSeconds -
+        Math.floor(
+          (Date.now() - JSON.parse(localStorage.getItem("startTime"))) / 1000
+        ) -
+        1
+    );
   };
 
   setTimeout(timerCountingDown, 1000);

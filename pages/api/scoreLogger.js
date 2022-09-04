@@ -46,18 +46,7 @@ export default withSessionRoute(async function logExamStartTime(req, res) {
         console.error("Failed: ", err.message);
       });
 
-    req.session.reading = {
-      doneWithExam: false,
-    };
-    req.session.writing = {
-      doneWithExam: false,
-    };
-    req.session.noCalc = {
-      doneWithExam: false,
-    };
-    req.session.calcAllowed = {
-      doneWithExam: false,
-    };
+    
     
 
     res.send(

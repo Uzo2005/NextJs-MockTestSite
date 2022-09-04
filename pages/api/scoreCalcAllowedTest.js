@@ -77,7 +77,7 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
       };
       
       await req.session.save();
-// console.log(req.session)
+      setTimeout(()=>{}, 2000)
       
       res.send(
         JSON.stringify(
