@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { withSessionSsr } from "../lib/withSessions";
 
 import RegisterForm from "../components/Form/RegisterForm";
 
@@ -16,3 +17,20 @@ export default function Register() {
     </>
   );
 }
+
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req, res }) {
+    if (req.session.user) {
+      return {
+        redirect: {
+          destination: "/dashboard",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {},
+    };
+  }
+);

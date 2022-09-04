@@ -1,6 +1,9 @@
 import LoginForm from "../components/Form/LoginForm";
 import Head from "next/head";
 
+
+import { withSessionSsr } from "../lib/withSessions";
+
 const Login = () => {
   return (
     <>
@@ -16,3 +19,21 @@ const Login = () => {
   );
 };
 export default Login;
+
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req, res }) {
+    if (req.session.user) {
+      return {
+        redirect: {
+          destination: "/dashboard",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {},
+    };
+  }
+);
+
