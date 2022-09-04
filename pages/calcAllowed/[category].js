@@ -36,7 +36,15 @@ const noCalc = ({ multiChoiceData, gridInData, doneWithExam }) => {
 export default noCalc;
 
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req }) {
+  async function getServerSideProps({ req,res }) {
+    if (!req.session.user) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
     const examId = req.session.examInfo.id;
     const doneWithCalcAllowedExam =
       req.session.calcAllowed == undefined

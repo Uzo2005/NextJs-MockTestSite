@@ -50,7 +50,16 @@ const reading = ({
 export default reading;
 
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req }) {
+  async function getServerSideProps({ req,res }) {
+    if (!req.session.user) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+
     const examId = req.session.examInfo.id;
     const doneWithReadingExam =
       req.session.reading == undefined

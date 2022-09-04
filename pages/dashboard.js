@@ -1,6 +1,7 @@
 import UserDashboard from "../components/Dashboard/Dashboard";
 
 import Head from "next/head";
+
 import { withSessionSsr } from "../lib/withSessions";
 import { readClient } from "../lib/sanityClient";
 
@@ -22,9 +23,16 @@ const Dashboard = ({ user, availableTests }) => {
 export default Dashboard;
 
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req }) {
+  async function getServerSideProps({ req, res }) {
 
-
+  if (!req.session.user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
     // req.session.reading = {
     //   doneWithExam: false,
     // };

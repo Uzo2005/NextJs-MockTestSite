@@ -32,6 +32,14 @@ export default end;
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req, res }) {
+    if (!req.session.user) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
     const {
       readingRawScore,
       writingRawScore,

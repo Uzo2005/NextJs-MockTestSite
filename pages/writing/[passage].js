@@ -44,7 +44,15 @@ const writing = ({
 export default writing;
 
 export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req }) {
+  async function getServerSideProps({ req,res }) {
+    if (!req.session.user) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
     const examId = req.session.examInfo.id;
     const doneWithWritingExam =
       req.session.writing == undefined
