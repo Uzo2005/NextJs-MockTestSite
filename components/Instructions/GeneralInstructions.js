@@ -1,6 +1,21 @@
 import Template from "./Template";
+import {useState, useEffect} from 'react'
 
 const GeneralInstructions = () => {
+  useEffect(() => {
+    localStorage.removeItem("startTime");
+  }, []);
+
+    const [hydrated, setHydrated] = useState(false);
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null;
+  }
   return (
     <Template prevLink="/dashboard" nextLink="/reading/0">
       <span className="font-bold p-1">1.</span>
@@ -15,11 +30,11 @@ const GeneralInstructions = () => {
         Reading scores.
       </span>
       <br></br>
-      
+
       <span className="font-bold p-1">3.</span>
       <span className="font-semibold text-blue-900">
         You must complete(or skip) each section to unlock the next. You cannot
-       {/* eslint-disable-next-line react/no-unescaped-entities */}
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         'save' a section for later, and once a section's timer has run out, you
         cannot go back to work on that section again.
       </span>
