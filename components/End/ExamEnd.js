@@ -2,7 +2,6 @@ import Link from "next/link";
 import Confetti from "../Confetti/ConfettiComponent";
 import { useState, useEffect } from "react";
 
-
 const ExamEnd = ({
   readingScore,
   writingScore,
@@ -12,7 +11,7 @@ const ExamEnd = ({
   mathsSectionScore,
   finalSATScore,
   testId,
-  userId
+  userId,
 }) => {
   async function postData(url = "", data = {}) {
     // Default options are marked with *
@@ -34,8 +33,7 @@ const ExamEnd = ({
 
   useEffect(() => {
     if (!localStorage.getItem("justFinishedExam")) {
-
-      localStorage.setItem("justFinishedExam", JSON.stringify('done'))
+      localStorage.setItem("justFinishedExam", JSON.stringify("done"));
 
       postData("/api/scoreLogger", {
         englishSectionScore,
@@ -50,21 +48,19 @@ const ExamEnd = ({
       }).then((res) => {
         console.log("On the frontend:", res);
       });
-
     }
     return () => {
       localStorage.removeItem("justFinishedExam");
     };
-    
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
   const [hydrated, setHydrated] = useState(false);
 
   // Wait until after client-side hydration to show
   useEffect(() => {
     setHydrated(true);
-    location.reload()
+    location.reload();
   }, []);
 
   if (!hydrated) {
