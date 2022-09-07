@@ -64,6 +64,7 @@ const ExamEnd = ({
   // Wait until after client-side hydration to show
   useEffect(() => {
     setHydrated(true);
+    location.reload()
   }, []);
 
   if (!hydrated) {

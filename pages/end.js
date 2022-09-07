@@ -49,7 +49,8 @@ export const getServerSideProps = withSessionSsr(
     const userId = req.session.user.id;
     const testId = req.session.examInfo.id;
     const mathsRawScore =
-      noCalcRawScore?.noCalcRawScore + calcAllowedRawScore?.calcAllowedRawScore;
+      (noCalcRawScore?.noCalcRawScore || 0) +
+      (calcAllowedRawScore?.calcAllowedRawScore || 0);
     const testScores = {};
     Object.keys(scoreTable).forEach((rawScore) => {
       if (rawScore == readingRawScore?.readingRawScore || 0) {
@@ -62,9 +63,9 @@ export const getServerSideProps = withSessionSsr(
         testScores.writing = writingTestScore;
         // console.log("Writing Score is:", writingTestScore);
       }
-      if (rawScore == mathsRawScore || 0) {
-        const mathsTestScore = scoreTable[rawScore].maths;
-        testScores.maths = mathsTestScore;
+      if (rawScore == mathsRawScore) {
+        const mathsMainScore = scoreTable[rawScore].maths;
+        testScores.maths = mathsMainScore;
         // console.log("Maths Score is:", mathsTestScore);
       }
     });
