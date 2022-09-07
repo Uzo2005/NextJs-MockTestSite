@@ -60,13 +60,12 @@ const ExamEnd = ({
   // Wait until after client-side hydration to show
   useEffect(() => {
     setHydrated(true);
-    location.reload();
   }, []);
 
   if (!hydrated) {
     return null;
   }
-
+  setTimeout(location.reload(), 1000);
   return (
     <main className="grid">
       {finalSATScore >= 1400 && <Confetti />}
