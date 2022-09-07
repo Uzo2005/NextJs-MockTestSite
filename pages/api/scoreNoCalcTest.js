@@ -75,7 +75,7 @@ export default withSessionRoute(async function scoreNoCalcTest(req, res) {
           `Answers received :) your score is ${totalScore} out of ${
             Object.keys(studentAnswers).length
           } and you left ${
-            25 - Object.keys(studentAnswers).length
+            20 - Object.keys(studentAnswers).length
           } questions Unanswered`,
           null,
           2

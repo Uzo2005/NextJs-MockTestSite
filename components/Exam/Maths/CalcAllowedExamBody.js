@@ -30,6 +30,7 @@ const ExamBody = ({
         key={index}
         passageRoute={route}
         questionNumber={index + 1}
+        questionNumberForMarking={index + 1}
         optionA="OptionA"
         optionB="OptionB"
         optionC="OptionC"

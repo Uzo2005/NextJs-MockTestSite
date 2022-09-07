@@ -24,6 +24,7 @@ const MyRadioInput = ({ children, labelFor, ...props }) => {
 };
 const MultiChoiceQuestion = ({
   passageRoute,
+  questionNumberForMarking,
   questionNumber,
   questionImage,
   questionText,
@@ -48,28 +49,28 @@ const MultiChoiceQuestion = ({
       <br />
       <MyRadioInput
         value="A"
-        name={`passage${passageRoute}Question${questionNumber}`}
+        name={`passage${passageRoute}Question${questionNumberForMarking}`}
         labelFor={`${questionNumber}A`}
       >
         {optionA}
       </MyRadioInput>
       <MyRadioInput
         value="B"
-        name={`passage${passageRoute}Question${questionNumber}`}
+        name={`passage${passageRoute}Question${questionNumberForMarking}`}
         labelFor={`${questionNumber}B`}
       >
         {optionB}
       </MyRadioInput>
       <MyRadioInput
         value="C"
-        name={`passage${passageRoute}Question${questionNumber}`}
+        name={`passage${passageRoute}Question${questionNumberForMarking}`}
         labelFor={`${questionNumber}C`}
       >
         {optionC}
       </MyRadioInput>
       <MyRadioInput
         value="D"
-        name={`passage${passageRoute}Question${questionNumber}`}
+        name={`passage${passageRoute}Question${questionNumberForMarking}`}
         labelFor={`${questionNumber}D`}
       >
         {optionD}

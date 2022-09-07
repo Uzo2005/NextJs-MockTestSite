@@ -4,6 +4,10 @@ import {useState, useEffect} from 'react'
 const GeneralInstructions = () => {
   useEffect(() => {
     localStorage.removeItem("startTime");
+    localStorage.removeItem("noCalcFormState");
+    localStorage.removeItem("calcAllowedFormState");
+    localStorage.removeItem("readingFormState");
+    localStorage.removeItem("writingFormState");
   }, []);
 
     const [hydrated, setHydrated] = useState(false);

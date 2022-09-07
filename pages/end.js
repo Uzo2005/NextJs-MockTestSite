@@ -49,28 +49,30 @@ export const getServerSideProps = withSessionSsr(
     const userId = req.session.user.id;
     const testId = req.session.examInfo.id;
     const mathsRawScore =
-      noCalcRawScore.noCalcRawScore + calcAllowedRawScore.calcAllowedRawScore;
+      noCalcRawScore?.noCalcRawScore + calcAllowedRawScore?.calcAllowedRawScore;
     const testScores = {};
     Object.keys(scoreTable).forEach((rawScore) => {
-      if (rawScore == readingRawScore.readingRawScore) {
+      if (rawScore == readingRawScore?.readingRawScore || 0) {
         const readingTestScore = scoreTable[rawScore].reading;
         testScores.reading = readingTestScore;
         // console.log("Reading Score is:", readingTestScore);
       }
-      if (rawScore == writingRawScore.writingRawScore) {
+      if (rawScore == writingRawScore?.writingRawScore || 0) {
         const writingTestScore = scoreTable[rawScore].writing;
         testScores.writing = writingTestScore;
         // console.log("Writing Score is:", writingTestScore);
       }
-      if (rawScore == mathsRawScore) {
+      if (rawScore == mathsRawScore || 0) {
         const mathsTestScore = scoreTable[rawScore].maths;
         testScores.maths = mathsTestScore;
         // console.log("Maths Score is:", mathsTestScore);
       }
     });
 
-    const englishTestScore = (testScores.writing + testScores.reading) * 10;
-    const totalScore = englishTestScore + testScores.maths;
+    const englishTestScore =
+      (testScores.writing + testScores.reading) * 10;
+    const mathsTestScore = testScores.maths;
+    const totalScore = englishTestScore + mathsTestScore;
     // console.log("Test Score Object:", testScores);
     // console.log("englishSatScore:", englishTestScore);
     // console.log("my Sat Score is:", totalScore);
@@ -79,15 +81,15 @@ export const getServerSideProps = withSessionSsr(
 
     return {
       props: {
-        readingScore: readingRawScore.readingRawScore,
-        writingScore: writingRawScore.writingRawScore,
-        noCalcScore: noCalcRawScore.noCalcRawScore,
-        calcAllowedScore: calcAllowedRawScore.calcAllowedRawScore,
+        readingScore: readingRawScore?.readingRawScore || 0,
+        writingScore: writingRawScore?.writingRawScore || 0,
+        noCalcScore: noCalcRawScore?.noCalcRawScore || 0,
+        calcAllowedScore: calcAllowedRawScore?.calcAllowedRawScore || 0,
         englishSectionScore: englishTestScore,
-        mathsSectionScore: testScores.maths,
+        mathsSectionScore: mathsTestScore,
         finalSATScore: totalScore,
         testId: testId,
-        userId: userId
+        userId: userId,
       },
     };
   }

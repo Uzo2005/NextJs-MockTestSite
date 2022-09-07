@@ -51,6 +51,7 @@ const ExamBody = ({
                   passageRoute={route}
                   questionImage={questionsAndOptions.questionImage}
                   questionNumber={passageData.startingPoint + index + 1}
+                  questionNumberForMarking={index + 1}
                   questionText={questionsAndOptions.question}
                   optionA={questionsAndOptions.OptionA}
                   optionB={questionsAndOptions.OptionB}
