@@ -65,7 +65,7 @@ const ExamEnd = ({
   if (!hydrated) {
     return null;
   }
-  setTimeout(location.reload(), 1000);
+  location.reload()
   return (
     <main className="grid">
       {finalSATScore >= 1400 && <Confetti />}
