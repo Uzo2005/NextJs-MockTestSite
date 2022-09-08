@@ -65,7 +65,7 @@ const ExamEnd = ({
   if (!hydrated) {
     return null;
   }
-  location.reload()
+  
   return (
     <main className="grid">
       {finalSATScore >= 1400 && <Confetti />}
@@ -179,6 +179,9 @@ const ExamEnd = ({
             </tr>
           </tbody>
         </table>
+        <span className="text-pink-700 text-sm block">
+          You Might Need To Reload This Page To See Your Score
+        </span>
 
         <Link href="/dashboard">
           <button className=" bg-blue-700 hover:bg-blue-500 text-white font-semibold p-3 rounded-md mt-4 ">
