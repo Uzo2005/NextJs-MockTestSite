@@ -58,18 +58,18 @@ export default withSessionRoute(async function scoreReadingTest(req, res) {
         doneWithExam: true,
       };
       await req.session.save();
-console.log(
-  JSON.stringify(
-    `Answers received :) your score is ${score} out of ${
-      Object.keys(answers).length
-    } and you left ${
-      parseInt(Object.keys(correctAnswers).length) -
-      parseInt(Object.keys(answers).length)
-    } questions Unanswered`,
-    null,
-    2
-  )
-);
+// console.log(
+//   JSON.stringify(
+//     `Answers received :) your score is ${score} out of ${
+//       Object.keys(answers).length
+//     } and you left ${
+//       parseInt(Object.keys(correctAnswers).length) -
+//       parseInt(Object.keys(answers).length)
+//     } questions Unanswered`,
+//     null,
+//     2
+//   )
+// );
         
         res.send(
           JSON.stringify(
