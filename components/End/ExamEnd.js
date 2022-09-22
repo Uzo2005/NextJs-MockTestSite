@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Confetti from "../Confetti/ConfettiComponent";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const ExamEnd = ({
   readingScore,
@@ -13,6 +14,14 @@ const ExamEnd = ({
   testId,
   userId,
 }) => {
+  
+  const router = useRouter();
+ 
+  // const refreshData = () => {
+  //   router.replace(router.asPath);
+  // }
+
+
   async function postData(url = "", data = {}) {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -34,6 +43,7 @@ const ExamEnd = ({
   useEffect(() => {
     if (!localStorage.getItem("justFinishedExam")) {
       localStorage.setItem("justFinishedExam", JSON.stringify("done"));
+      // refreshData()
 
       postData("/api/scoreLogger", {
         englishSectionScore,

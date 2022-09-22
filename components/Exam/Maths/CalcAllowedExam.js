@@ -81,7 +81,7 @@ const FullExam = ({ categories }) => {
               console.log(data); // JSON data parsed by `data.json()` call
             });
 
-            router.push("/end");
+            router.push("/leisureBreak");
           }}
         >
           {({ handleSubmit, values }) => (
