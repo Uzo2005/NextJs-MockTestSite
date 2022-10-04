@@ -25,7 +25,7 @@ THIS IS HOW THIS WEBSITE WORKS:
  
 10. When the student submits or the timer runs out, the student is led to the ending page where he is congratulated for finishing the SAT mocktest and his score displayed.
 
-##What About The Future?
+## What About The Future?
 THIS ARE THE FUTURE FEATURES THAT WILL COME LATER:
 
 1. Enable students to go back and view their mistakes, rather than just knowing their scores.
