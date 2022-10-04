@@ -5,6 +5,7 @@ The idea for this project came to me when I observed that EdUSAabuja members use
 
 I began this project bebcause I wanted to make it easier for me and my mates to practice for the SAT with tools that we can customize. I continued working on it because I realised that since the SAT will soon go digital, then online SAT practice would be more popular in the future.
 
+## What Is Going On Here?
 THIS IS HOW THIS WEBSITE WORKS:
 1. The landing page is a register form which requires your name, email and preferred password.
 2. On filling the form details and submitting: the student is led to login. 
@@ -24,7 +25,7 @@ THIS IS HOW THIS WEBSITE WORKS:
  
 10. When the student submits or the timer runs out, the student is led to the ending page where he is congratulated for finishing the SAT mocktest and his score displayed.
 
-
+##What About The Future?
 THIS ARE THE FUTURE FEATURES THAT WILL COME LATER:
 
 1. Enable students to go back and view their mistakes, rather than just knowing their scores.
