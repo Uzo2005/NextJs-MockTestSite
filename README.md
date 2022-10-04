@@ -1,4 +1,4 @@
-I am not actually sure what a readme file should contain but I will try my best to explain what I have done in this project and what I still hope to do.
+I am not actually sure what this readme file should contain but I will try my best to explain what I have done in this project and what I still hope to do.
 
 ## Why this?
 The idea for this project came to me when I observed that EdUSAabuja members used google forms to practice for the SAT which I felt was not a very effective method.
@@ -6,7 +6,7 @@ The idea for this project came to me when I observed that EdUSAabuja members use
 I began this project bebcause I wanted to make it easier for me and my mates to practice for the SAT with tools that we can customize. I continued working on it because I realised that since the SAT will soon go digital, then online SAT practice would be more popular in the future.
 
 THIS IS HOW THIS WEBSITE WORKS:
-1. The landing page is a register form which requires your name and email and preferred password.
+1. The landing page is a register form which requires your name, email and preferred password.
 2. On filling the form details and submitting: the student is led to login. 
 3. After login,  the student is led to a dashboard listing all the available mocktests.
 4. On selecting one of the Mocktest available on the dashboard, the user is redirected to a general instructions page prompted to begin the Timer for the Reading section.
