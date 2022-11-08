@@ -4,14 +4,15 @@ import { readClient } from "../../lib/sanityClient";
 export default withSessionRoute(async function initExam(req, res) {
   try {
     if (req.method == "POST") {
+      // let wrongPassCode = req.session.wrongPassTrials.wrong
+      
       const {examId, passCodeProvidedByUser} = req.body;
-      console.log("passcode is:", passCodeProvidedByUser)
+  
 
       const query = `*[_type=='satExams' && _id=='${examId}']{testPassCode}`;
       const thisTestInfo = await readClient.fetch(query);
-      console.log(thisTestInfo)
-
-      if (thisTestInfo.testPassCode === passCodeProvidedByUser) {
+      
+      if (thisTestInfo[0].testPassCode == passCodeProvidedByUser) {
         req.session.examInfo = {
           id: examId,
         };
@@ -44,6 +45,6 @@ export default withSessionRoute(async function initExam(req, res) {
 
 /**
  * Fetch the test and its passcode, check if they are equal
- * If they are equal, then init exam,
+ * If they are equal, then init exam
  * If not return back and say the person should confirm the passcode after 2 minutes
  */

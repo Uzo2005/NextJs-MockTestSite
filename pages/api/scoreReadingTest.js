@@ -21,7 +21,7 @@ export default withSessionRoute(async function scoreReadingTest(req, res) {
 
 
 
-
+    
       
       const correctAnswers = {};
     
@@ -89,3 +89,9 @@ export default withSessionRoute(async function scoreReadingTest(req, res) {
     }
   }
 });
+
+
+/**
+ * Every time someone fails a question, the question number is added to the wrong questions array of objects
+ * together with the right answer to the question
+ */
