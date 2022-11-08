@@ -5,7 +5,7 @@ const LeisureBreak = () => {
       <span className="font-bold text-blue-500 block m-6">
         Hi, If You Had Any Problems During This Test,{" "}
         <span className="border-b-2 border-red-500">
-          <a href="https://wa.me/2348138950473">Contact Me On Whatsapp</a>
+          <a href="https://wa.me/2348034081196">Contact Mr. Goddey On Whatsapp For A Quick Fix</a>
         </span>{" "}
         For A Quick Fix
       </span>
