@@ -10,8 +10,8 @@ THIS IS HOW THIS WEBSITE WORKS:
 1. The landing page is a register form which requires your name, email and preferred password.
 2. On filling the form details and submitting: the student is led to login. 
 3. After login,  the student is led to a dashboard listing all the available mocktests.
-4. On selecting one of the Mocktest available on the dashboard, the user is redirected to a general instructions page prompted to begin the Timer for the Reading section.
-   This instructioms page contains a button for going back to the dashboard and another button for starting the Reading section which should last 65 minutes.
+4. On selecting one of the Mocktest available on the dashboard and inputing the passcode for the selected test, the user is redirected to a general instructions page and prompted to begin the Timer for the Reading section.
+   This instructions page contains a button for going back to the dashboard and another button for starting the Reading section which should last 65 minutes.
 
 5. If the student  clicked the "Start Timer" button on the general instructions page he will be  redirected to the Reading page which has a 65 minutes countdown timer and which redirects  to the writing instructions when the timer counts to 0. Also after the timer counts to zero the student cannot return to that section until he is done with the test.
 
@@ -40,7 +40,18 @@ THIS ARE THE FUTURE FEATURES THAT WILL COME LATER:
 This is a [Next.js](https://nextjs.org/) project that uses tailwind for styling.
 
 
-First create an environmental variables file and add you environmental variables to it (Contact me for the database details).
+First create an environmental variables file and add your environmental variables to it (Contact me for the database details).
+
+Install the Node_Modules:
+
+```bash
+npm install
+
+#or
+
+yarn install
+
+```
 
 Then, run the development server:
 
@@ -53,4 +64,4 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
                    
-         Thank you, happy coding:)
+         Thank you, and happy coding:)
